@@ -155,11 +155,6 @@ where:
 **Note**: The position input is in decimal degree notation of longitude,latitude.
 
 
-## Response Type
-
-JSON
-
-
 ## Request Parameters
 
 ### Mandatory Parameters

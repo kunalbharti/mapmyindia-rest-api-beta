@@ -58,7 +58,7 @@ This API finds the route between given coordinates in the supplied order using t
 Supported regions (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 
 ### [MapmyIndia Distance - Time Matrix API]()
-This API computes the driving distance and duration between a (set of) source/primary position(s) (geographical coordinates) and a list of all supplied secondary positions using two modes of route calculation i.e. optimal and shortest. 
+This API computes the driving distance and duration between a source/primary position (geographical coordinates) and a list of all supplied secondary positions using two modes of route calculation i.e. optimal and shortest. 
 Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 Please note that maximum number of points are limited to 100 only including source and secondary positions.
 
