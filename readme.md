@@ -53,11 +53,11 @@ Aligned with MapmyIndia Map data, these APIs utilize our vast geo-informatics ex
 
 ## MapmyIndia REST APIs - beta
 
-### [MapmyIndia Routing API]()
+### [MapmyIndia Routing API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-routing-api)
 This API finds the route between given coordinates in the supplied order using two modes of route calculation i.e. optimal and shortest. 
 Supported regions (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 
-### [MapmyIndia Distance - Time Matrix API]()
+### [MapmyIndia Distance - Time Matrix API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-distance-matrix-api)
 This API computes the driving distance and duration between a source/primary position (geographical coordinates) and a list of all supplied secondary positions using two modes of route calculation i.e. optimal and shortest. 
 Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 Please note that maximum number of points are limited to 100 only including source and secondary positions.
