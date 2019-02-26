@@ -62,7 +62,7 @@ This API computes the driving distance and duration between a source/primary pos
 Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 Please note that maximum number of points are limited to 100 only including source and secondary positions.
 
-### [MapmyIndia Snap to Road API]()
+### [MapmyIndia Snap to Road API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-snapToRoad-api)
 Snap to Road API, snaps given GPS points to the road network in the most plausible way. 
 Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 
