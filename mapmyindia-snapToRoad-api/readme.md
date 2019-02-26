@@ -1,6 +1,6 @@
-﻿![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
+![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
 
-# MapmyIndia Driving Distance - Time Matrix API for Predictive ETA - beta
+# MapmyIndia Snap To Road API - beta
 
 **Easy To Integrate Maps & Location APIs & SDKs For Web & Mobile Applications**
 
