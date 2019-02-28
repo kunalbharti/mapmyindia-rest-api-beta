@@ -24,7 +24,8 @@ It is mandatory to take permissions from the author before sharing with any pers
 
 | Version | Last Updated | Author | Revised Sections |
 | ---- | ---- | ---- | ---- |
-| 190.16 | 2018-08-03 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Updated with v19.0 dataset |
+| 191.17 | 2019-02-28 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Updated with v19.1 dataset |
+| 190.16 | 2019-02-11 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Updated with v19.0 dataset |
 | 0.2 | 2018-08-03 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Delhi NCR, Chennai, Mumbai, Navi-Mumbai, Thane, Hyderabad & Secundarabad; using 40 maps |
 | 0.1 | 2018-07-17 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Initial release for 9 maps; bengaluru added |
 
@@ -174,26 +175,26 @@ JSON: response will served as JSON
 
 ## Sample Input
 
-`https://apis.mapmyindia.com/advancedmaps/v1/<lic_key>/distance_matrix_predictive/driving/77.5998448,12.5090914;77.5800417,12.5092973?dep_time=1531543500`
+`https://apis.mapmyindia.com/advancedmaps/v1/<assigned_lic_key>/distance_matrix_predictive/driving/77.5998448,12.5090914;77.5800417,12.5092973?dep_time=1531543500`
 
 ## Sample Response
 ```json
 {
   "responseCode": 200,
-  "check": 5002,
-  "version": "190.16",
+  "check": 5025,
+  "version": "191.17",
   "results": {
     "code": "Ok",
     "distances": [
       [
         0,
-        13794.4
+        3038.2
       ]
     ],
     "durations": [
       [
         0,
-        5658.9
+        1839.6
       ]
     ]
   }
