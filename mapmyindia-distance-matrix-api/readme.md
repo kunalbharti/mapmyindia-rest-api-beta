@@ -171,8 +171,14 @@ For example 77.983936,28.255904;77.05993,28.487555.
 	- `1` shortest (it will calculate route by excluding access penalties like private roads, etc.)
 2.  *`region`*(string): This parameter is optional for India; for other countries (Sri Lanka, Nepal, Bangladesh & Bhutan) this parameter is mandatory. Possible values are `ind` (for India, default), `lka` (for Sri Lanka) , `npl` (for Nepal) , `bgd` (for Bangladesh) and `btn` (for Bhutan)
 
-## Response Type
-JSON: response will served as JSON
+### Parameters for Many-to-Many Distance Matrix
+#### Important Note
+Following parameters are **only** applicable to `distance_matrix` resource.
+
+1. *`sources`*: (integers) To specify which of the coordinates supplied in the URL are to be treated as *source* position for many to many distance matrix calculation, indicate that coordinate pair's index. E.g. 0;1 means that 0<sup>th</sup> and 1<sup>st</sup> coordinate pairs are source points.
+Default values is `all`. The indexes must be semi-colon separated. e.g: 0;1;2;...
+2.  *`destinations`*: (integers) To specify which of the coordinates supplied in the URL are to be treated as *destination* position for many to many distance matrix calculation, indicate that coordinate pair's index. E.g. 2;3 means that 0<sup>th</sup> and 1<sup>st</sup> coordinate pairs are destination points.
+Default values is `all`. The indexes must be semi-colon separated. e.g: 3;4;5;...
 
 
 ## Response Parameters
@@ -183,6 +189,9 @@ JSON: response will served as JSON
 	- `code`: if the request was successful, code is ok.
 	- `durations`: Duration in seconds for source to source (default 0), 1st, 2nd, 3rd secondary locations... from source.
 	- `distances`: Distance in meters for source to source (default 0), 1st, 2nd, 3rd secondary locations... from source.
+
+## Response Type
+JSON: response will served as JSON
 
 
 ## Response Codes {as HTTP response code}
@@ -199,9 +208,18 @@ JSON: response will served as JSON
 
 ## Sample Input
 
+### For 1-to-Many Calculations:
+
 `https://apis.mapmyindia.com/advancedmaps/v1/<lic_key>/distance_matrix/driving/90.33687,23.470314;90.379249,23.497178;90.497009,23.546286?rtype=1&region=bgd`
 
+### For Many-to-Many Calculations: 
+
+`https://apis.mapmyindia.com/advancedmaps/v1/<lic_key>/distance_matrix/driving/77.983936,28.255904;77.05993,28.487555;77.15993,28.587555;77.264997,28.554534?sources=0;1&destinations=2;3`
+
 ## Sample Response
+
+### For 1-to-Many Calculations: 
+
 ```json
 {
 	"responseCode": 200,
@@ -225,10 +243,44 @@ JSON: response will served as JSON
 	}
 }
 ```
+### For Many-to-Many Calculations: 
+
+```json
+{
+    "responseCode": 200,
+    "version": "191.17",
+    "results": {
+        "code": "Ok",
+        "distances": [
+            [
+                128266.7,
+                125884
+            ],
+            [
+                18709.9,
+                29030.3
+            ]
+        ],
+        "durations": [
+            [
+                10306.6,
+                10221.1
+            ],
+            [
+                1213.3,
+                2104.9
+            ]
+        ]
+    }
+}
+```
+
 
 ## Live Demo
 
-[Under Construction]()
+(For 1 to Many Calculations only)
+
+[Click Here](https://www.mapmyindia.com/api/advanced-maps/doc/sample/mapmyindia-maps-distance-matrix-api-example)
 
 For more details, please visit our full documentation.
 
