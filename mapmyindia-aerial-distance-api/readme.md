@@ -21,12 +21,12 @@ It is mandatory to take permissions from the author before sharing with any pers
 
 Adding Aerial Distance API would help to calculate the distance between two points on the map. For example, you can measure the mileage in a straight line between two cities.
 
-You can now easily estimate how big the lake near your house is, or just the **aerial distance** between Delhi and Mumbai is 1150.06 km (714.61 mi). Same time this **API  don't calculate road distance between two points.**
+You can now easily estimate how big the lake near your house is, or just the **aerial distance** between Delhi and Mumbai is 1150.06 km (714.61 mi). Same time this **API  doesn't calculate road distance between two points.**
 
 ## Security Type
+
 - License key based authentication
 - IP/domain based whitelisting
-
 
 ## Input Method
 GET
@@ -47,17 +47,14 @@ where:
 
 ## Request Parameters
 
-###  a. MandatoryParameters:
+###  Mandatory Parameters:
 
 1.  x1: Latitude of start point.
-    
 2.  y1: Longitude of start point.
-    
 3.  x2: Latitude of destination point
-    
 4.  y2: Longitude of destination point.`
 
-### b. OptionalParameters:
+### Optional Parameters:
 
 1. Unit: unit of distance (default value is K)
 2. K: Kilometre
@@ -94,13 +91,27 @@ JSON: response will served as JSON
 
 The Aerial_Distance API will return only one result object. The following output parameters will be supported in the Aerial_Dstance API response.
 
-1. **responseCode:** See the service dependent and general status codes.
-    
-2.  **results:** array of results, each consisting of the following parameters
-    
-      **a. distance:** a distance between strart & destinaton.
-       **b. unit:** unit of distance.
-    
+1. `responseCode`: See the service dependent and general status codes.
+2.  `results`: array of results, each consisting of the following parameters.
+	- `distance`: a distance between strart & destinaton.
+	- `unit`: unit of distance.
+ 
+## Sample Request:
+
+URL: 
+```html
+https://apis.mapmyindia.com/advancedmaps/v1/<Assigned_licence_key>/distanceA?x1=34.506172&y1=76.108652&x2=28.4586&y2=77.85698&unit=K
+```
+
+
+## Sample Response data:
+```json
+{  
+	"responseCode": 200, 
+	"distance": 692.52185107232, 
+	"unit": "K"
+}
+```
 
 ![Email](https://www.google.com/a/cpanel/mapmyindia.co.in/images/logo.gif?service=google_gsuite) 
 Email us at [apisupport@mapmyindia.com](mailto:apisupport@mapmyindia.com)
