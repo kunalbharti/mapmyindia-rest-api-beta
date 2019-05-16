@@ -5,7 +5,7 @@
 **Easy To Integrate Maps & Location APIs & SDKs For Web & Mobile Applications**
 
 Powered with India's most comprehensive and robust mapping functionalities.
-**Now Available**  for Srilanka, Nepal, Bhutan and Bangladesh
+**Now Available**  for Sri Lanka, Nepal, Bhutan and Bangladesh
 
 You can get your api key to be used in this document here: [https://www.mapmyindia.com/api/signup](https://www.mapmyindia.com/api/signup)
 
@@ -66,7 +66,7 @@ where:
 
 ### Optional Parameters
 
-1. *`boundry`*(boolean 0 or 1): A boolean value used to denote: 
+1. *`boundry`*(Boolean 0 or 1): A Boolean value used to denote: 
 	- `0`: Only centroid of the area's polygon is required as output.
 	- `1`: GeoJSON geometry as well as centroid of the area is required as output.
 
@@ -125,7 +125,7 @@ To see a demo of the same on MapmyIndia Interactive Maps,
 [Click Here](https://jsfiddle.net/kunalbharti/nv1zqru2/)
 
 ### Important Note: 
-- Currently, the API provides boundary data for the following administrative types aread within MapmyIndia Maps DB: 
+- Currently, the API provides boundary data for the following administrative types are within MapmyIndia Maps DB: 
 	- `Locality` (e.g. "Police Staff Colony, Nashik" with eLoc 4HUDNT)
 	- `SubLocality` (e.g. "Old CBS Pass Kendra, Police Staff Colony, Nashik" with eLoc O59U62)
 	- `SubSubLocality` (e.g. "Government Housing Society, Old CBS Pass Kendra, Police Staff Colony, Nashik" with eLoc LXMZJF)
