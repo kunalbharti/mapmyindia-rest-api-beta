@@ -1,6 +1,6 @@
 ![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
 
-# MapmyIndia Boundary Geonmetry API - beta
+# MapmyIndia Boundary Geometry API - beta
 
 **Easy To Integrate Maps & Location APIs & SDKs For Web & Mobile Applications**
 
