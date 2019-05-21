@@ -18,6 +18,7 @@ It is mandatory to take permissions from the author before sharing with any pers
 
 | Version | Last Updated | Author |
 | ---- | ---- | ---- |
+| 0.0.2 | May 2019 | MapmyIndia API Team ([KB](https://github.com/kunalbharti)) |
 | 0.0.1 | February 2019 | MapmyIndia API Team ([KB](https://github.com/kunalbharti)) |
 
 ## API Version History
