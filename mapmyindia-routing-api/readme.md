@@ -1,4 +1,4 @@
-﻿![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
+﻿﻿![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
 
 # MapmyIndia Route / Driving Directions API - beta
 
@@ -25,6 +25,7 @@ It is mandatory to take permissions from the author before sharing with any pers
 
 | Version | Last Updated | Author | Revised Sections |
 | ---- | ---- | ---- | ---- |
+| 200.17 | 2018-05-29 | MapmyIndia API Team ([PS](https://github.com/map-123)) | “emergency” introduced as profile |
 | 200.17 | 2018-05-21 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Data update ver 20.0, CORS enabled, “route_traffic” introduced as resource |
 | 191.17 | 2018-02-07 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Data update ver 19.1, Document detailing, “route_eta” introduced as resource |
 | 1.3 | 2018-12-24 | MapmyIndia API Team ([PS](https://github.com/map-123)) | Shortest route calculation (Optional) |
@@ -90,29 +91,11 @@ GET
 							<td class="row-nocellborder" headers="d156249e43 ">The REST API license key authorized to access the resource</td>
 						</tr>
 						<tr class="&#39;&#39; override_background">
-							<td class="cellrowborder" rowspan="12" headers="d156249e37 ">Resources</td>
+							<td class="cellrowborder" rowspan="3" headers="d156249e37 ">Resources</td>
 							<td class="cellrowborder" headers="d156249e40 ">
 								<code>route_adv</code>
 							</td>
 							<td class="row-nocellborder" headers="d156249e43 ">to calculate a route & its duration without considering traffic conditions.</td>
-						</tr>
-						<tr class="&#39;&#39;">
-							</tr>
-						<tr class="&#39;&#39; override_background">
-						</tr>
-						<tr class="&#39;&#39;">
-						</tr>
-						<tr class="&#39;&#39; override_background">
-						</tr>
-						<tr class="&#39;&#39;">
-						</tr>
-						<tr class="&#39;&#39; override_background">
-						</tr>
-						<tr class="&#39;&#39;">
-						</tr>
-						<tr class="&#39;&#39; override_background">
-							</tr>
-						<tr class="&#39;&#39;">
 						</tr>
 						<tr class="&#39;&#39;">
 							<td class="cellrowborder" headers="d156249e40 ">
@@ -129,11 +112,18 @@ GET
 							</td>
 							</tr>
 						<tr class="&#39;&#39; override_background">
-							<td class="cellrowborder" headers="d156249e37 ">Profile</td>
+							<td class="cellrowborder" headers="d156249e37 " rowspan="2">Profile</td>
 							<td class="cellrowborder" headers="d156249e40 ">
 							    <code>driving</code>
 							</td>
 							<td class="row-nocellborder" headers="d156249e43 ">Meant for car routing
+							</td>
+						</tr>
+                        <tr class="&#39;&#39; override_background">
+							<td class="cellrowborder" headers="d156249e40 ">
+							    <code>emergency</code>
+							</td>
+							<td class="row-nocellborder" headers="d156249e43 ">Meant for special vehicle routing for MPDIAL100 project. Routing is restricted to MP state only (MBR). <code>rtype</code> & <code>region</code> request parameters are not supported.
 							</td>
 						</tr>
 						<tr class="&#39;&#39; override_background">
