@@ -1,36 +1,48 @@
-
 ![MapmyIndia APIs](https://www.mapmyindia.com/api/img/mapmyindia-api.png)
-# Travelled Route API
 
-This API can be used to get an image of map with travelled route plotted on it. The image size can be specified; which will dynamically create an image of varying zoom levels with the start and end locations plotted on it.
+# MapmyIndia Traveled Route API
 
-### API URL
+This API can be used to get an image of map with traveled route plotted on it. The image size can be specified; which will dynamically create an image of varying zoom levels with the start and end locations plotted on it.
 
-1.  The API URL should be of the following construct:  http://apis.mapmyindia.com/advancedmaps/v1//<licence_key>/still_image_polyline?
+## API URL
+
+1.  The API URL should be of the following construct:  http://apis.mapmyindia.com/advancedmaps/v1/<licence_key>/still_image_polyline?
 2. **output**  format will be an 8-bit PNG image of varying sizes.
 3.  The method used is  **POST**.
 
-### Request Parameters
+## Request Parameters
 
 The following input parameters will be supported in the Travelled Route API request –  
 The body content will be of ‘form-data’ type, consisting of the following parameters:
 
-1.  `height:` the height of the image resolution that is required.
-2.  `width:` the width of the image resolution that is required.
+### Mandatory Parameters:
+
+1.  `height:` The height of the image resolution that is required.
+2.  `width:` The width of the image resolution that is required.
 3.  `polyline:` An array of comma separated [Longitude,Latitude] points that define the polyline along which the route was traversed.
-4.  `licence_key:` the REST API licence key allocated to you
+4.  `licence_key:` The REST API licence key allocated to you
+
+### Optional Parameters:
+
+1. `color:` hex color ie. #3edhhs  
+2. `icon_from:` url: [https://maps.mapmyindia.com/images/from.png](https://maps.mapmyindia.com/images/from.png)  
+3. `icon_to:`url: [https://maps.mapmyindia.com/images/to.png](https://maps.mapmyindia.com/images/to.png)  
+4. `offset:`[top,right]
+5. `padding_x:`number (in pixels); Max: 150
+6. `padding_y:`number (in pixels); Max: 150
+
 
 ### Response Parameters
 
 The following output parameters will be supported in the Travelled Route API response
 
-1.  An 8-bit png image of <height x width> resolution.
+1.  An 8-bit png image of  `height` x `width`  resolution.
 
-### Performance
+## Performance
 
-The Travelled Route API is a resource intensive API that consumes considerable computing power of the server. This API is meant to be used sparingly and hence has an above average response time. The Travelled Route API must respond within 2500 ms under all circumstances.
+The Traveled Route API is a resource intensive API that consumes considerable computing power of the server. This API is meant to be used sparingly and hence has an above average response time. The Traveled Route API must respond within 2500 ms under standard circumstances.
 
-### Example
+## Example
 
 **Input**:  
 http://apis.mapmyindia.com/advancedmaps/v1/<licence_key>/ still_image_polyline?
@@ -68,5 +80,3 @@ Read about the latest updates & customer stories
 
 
 > © Copyright 2019. CE Info Systems Pvt. Ltd. All Rights Reserved. | [Terms & Conditions](http://www.mapmyindia.com/api/terms-&-conditions)
-> mapbox-gl-native copyright (c) 2014-2019 Mapbox.
->  Written with [StackEdit](https://stackedit.io/) by MapmyIndia.
