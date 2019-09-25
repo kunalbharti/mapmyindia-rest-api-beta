@@ -118,7 +118,7 @@ https://apis.mappls.com/advancedmaps/v1/reverse?lat=30.274665&lon=-97.740553
 
 For any queries and support, please contact: 
 
-[![N|Solid](https://mmi-api-team.s3.ap-south-1.amazonaws.com/mappls/mappls.png =150x100)](https://www.mapmyindia.com/api/)
+<a href="https://www.mapmyindia.com/api/"><img src="https://mmi-api-team.s3.ap-south-1.amazonaws.com/mappls/mappls.png" width="150" height="100" /></a>
 Email us at [apisupport@mapmyindia.com](mailto:apisupport@mapmyindia.com)
 
 ![](https://www.mapmyindia.com/api/img/icons/stack-overflow.png)
