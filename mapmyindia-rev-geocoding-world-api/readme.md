@@ -1,4 +1,4 @@
-﻿[![N|Solid](https://mmi-api-team.s3.ap-south-1.amazonaws.com/mappls/mappls.png =160x80)](https://www.mapmyindia.com/api/)
+﻿<a href="https://www.mapmyindia.com/api/"><img src="https://mmi-api-team.s3.ap-south-1.amazonaws.com/mappls/mappls.png" width="160" height="80" /></a>
 
 # Mappls Reverse Geocoding API
 
