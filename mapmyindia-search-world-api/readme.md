@@ -1,4 +1,4 @@
-﻿<a href="https://www.mapmyindia.com/api/"><img src="https://mmi-api-team.s3.ap-south-1.amazonaws.com/mappls/mappls.png" width="160" height="80" /></a>
+﻿<a href="https://www.mapmyindia.com/api/"><img src="https://tinyurl.com/y2l4j5rn" width="160" height="80" /></a>
 
 # Mappls Search API
 
@@ -115,7 +115,7 @@ https://apis.mappls.com/advancedmaps/v1/search?q=eiffel tower
 
 For any queries and support, please contact: 
 
-<a href="https://www.mapmyindia.com/api/"><img src="https://mmi-api-team.s3.ap-south-1.amazonaws.com/mappls/mappls.png" width="150" height="100" /></a>
+<a href="https://www.mapmyindia.com/api/"><img src="https://tinyurl.com/y2l4j5rn" width="150" height="100" /></a>
 Email us at [apisupport@mapmyindia.com](mailto:apisupport@mapmyindia.com)
 
 ![](https://www.mapmyindia.com/api/img/icons/stack-overflow.png)
