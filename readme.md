@@ -47,36 +47,17 @@ Highly detailed & interactive maps with 2D/3D viewing options &  real-time traff
 #### ROUTES & NAVIGATION
 Get turn-by-turn directions with alternate driving routes between specified locations, with traffic
 
-#### ANALYTICS
-**Coming soon** with multiple data attributes such as demographic data attributes. 
+#### GEOANALYTICS
+GeoAnalytics Web JS APIs with multiple data attributes such as demographic data attributes. 
 Aligned with MapmyIndia Map data, these APIs utilize our vast geo-informatics experience to provide customers a enhanced leverage over competition using query-enabled analytics APIs to draw heatmaps, thematic maps or other types geo-visualizations for your business analysis problems.
 
 ## MapmyIndia REST APIs - beta
-
-### [MapmyIndia Routing API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-routing-api)
-This API finds the route between given coordinates in the supplied order using two modes of route calculation i.e. optimal and shortest. 
-Supported regions (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 
 ### [MapmyIndia Distance - Time Matrix API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-distance-matrix-api)
 This API computes the driving distance and duration between a source/primary position (geographical coordinates) and a list of all supplied secondary positions using two modes of route calculation i.e. optimal and shortest. 
 Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
 Please note that maximum number of points are limited to 100 only including source and secondary positions.
 
-### [MapmyIndia Snap to Road API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-snapToRoad-api)
-Snap to Road API, snaps given GPS points to the road network in the most plausible way. 
-Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan.
-
-Please note the request might result multiple sub-traces. 
-Large jumps in the timestamps (> 60s) or improbable transitions lead to trace splits if a complete matching could not be found. 
-The algorithm might not be able to match all points. 
-Outliers are removed if they cannot be matched successfully. 
-Please note that maximum number of points are limited to 100 only. 
-
-### [MapmyIndia Predictive Distance-Time Matrix API](https://github.com/kunalbharti/mapmyindia-rest-api-beta/tree/master/mapmyindia-predictive-distance-matrix-api)
-
-Adding driving distance matrix API would help to add predicted travel time & duration from a given origin point to a number of points. This REST API computes the distance and duration of a route between a source/primary position (geographical coordinates) and a list of all supplied secondary positions.
-**Optionally one can input the dep_time parameter and get the distance and duration optimized for that part of day of a week.** Time based functionality is available for selected cities only.
-Supported region (countries) are India, Sri Lanka, Nepal, Bangladesh & Bhutan. Please note that maximum number of points are limited to 100 only including source and secondary positions.
 
 ## Our many happy customers
 
