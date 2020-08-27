@@ -1,9 +1,8 @@
-openapi: 3.0.1
-
+openapi: 3.0.3
 info:
   title: Search APIs
   description: "The MapmyIndia Search APIs unlocks the Search capabilities of MapmyIndia services to provide developers location based applications. It helps users discover our maps with rich location data point of interest for over 50 million places."
-  termsOfService: http://www.mapmyindia.com/about/terms-conditions
+  termsOfService: 'http://www.mapmyindia.com/about/terms-conditions'
   version: 1.0.0
   license:
     name: MapmyIndia License Key Signup
@@ -12,274 +11,126 @@ info:
     name: MapmyIndia API Support
     email: apisupport@mapmyindia.com
     url: https://www.mapmyindia.com/api/
-
 servers:
   - url: https://apis.mapmyindia.com
-    description: Live Prod URL for Advanced Maps APIs
-  - url: https://atlas.mapmyindia.com
-    description: Live Prod URL for Atlas APIs
-
+    description: 'Live Prod server for Advanced Maps APIs'
+paths:
+  /advancedmaps/v1/{REST_KEY}/place_detail:
+      get:
+        tags:
+          - eLoc API
+        description: 'MapmyIndia eloc is a simple, standardized and precise pan-India digital address system. Every location has been assigned a unique digital address or an eLoc. The eLoc API can be used to extract the details of a place with the help of its eLoc i.e. a 6 digit code or a place_id.'
+        summary: This API returns the POI of the lat lng entered by you.
+        operationId: eLocAPI
+        parameters:
+          - name: place_id
+            in: query
+            description: 'Six or Eight Digit unique code.'
+            allowEmptyValue: false
+            required: true
+            schema:
+              type: string
+          - name: REST_KEY
+            in: path
+            description: 'The REST API licence key allocated to you by signing into our services and registering yourself as a developer.'
+            allowEmptyValue: false
+            required: true
+            schema:
+              type: string
+          - name: region
+            in: query
+            description: 'It takes in the country code. LKA, IND, BTN, BGD, NPL for Sri-Lanka, India, Bhutan, Bangladesh, Nepal respectively. Default is India (IND)'
+            allowEmptyValue: false
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/EL1'
+          '204':
+            description: Not found
+          '400':
+            description: Bad request
+          '401':
+            description: API access denied
+          '403':
+            description: Forbidden
+          '500':
+            description: Something went wrong
+          '503':
+            description: Internal server error
+        deprecated: false
+  /advancedmaps/v1/{REST_KEY}/rev_geocode:
+      get:
+        tags:
+          - Reverse Geocode API
+        description: 'Reverse Geocoding is a process to give the closest matching address to a provided geographical coordinates (latitude/longitude). MapmyIndia reverse geocoding API provides real addresses along with nearest popular landmark for any such geo-positions on the map.'
+        summary: This API returns the POI of the lat lng entered by you.
+        operationId: ReverseGeocodeAPI
+        parameters:
+          - name: lat
+            in: query
+            description: 'The latitude of the location'
+            allowEmptyValue: false
+            required: true
+            example: '28.569548'
+            schema:
+              type: string
+          - name: lng
+            in: query
+            description: 'The longitude of the location'
+            allowEmptyValue: false
+            required: true
+            example: '77.856954'
+            schema:
+              type: string
+          - name: REST_KEY
+            in: path
+            description: 'The rest key allocated to your account.'
+            allowEmptyValue: false
+            required: true
+            schema:
+              type: string
+          - name: region
+            in: query
+            description: 'It takes in the country code. LKA, IND, BTN, BGD, NPL for Sri-Lanka, India, Bhutan, Bangladesh, Nepal respectively. Default is India (IND)'
+            allowEmptyValue: false
+            example: 'IND'
+            schema:
+              type: string
+          - name: lang
+            in: query
+            description: 'This parameter accepts the "hi" (ISO 639-1 Language Code for Hindi) as a value.'
+            allowEmptyValue: false
+            example: 'hi'
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/RG1'
+          '204':
+            description: Not found
+          '400':
+            description: Bad request
+          '401':
+            description: API access denied
+          '403':
+            description: Forbidden
+          '500':
+            description: Something went wrong
+          '503':
+            description: Internal server error
+        deprecated: false
 components:
   schemas:
-    AutosuggestAPIResults:
-      title: Auto Suggest Results
-      description: The result object which contains the Auto Suggest API results.
-      type: object
-      required:
-        - type
-        - typeX
-        - placeAddress
-        - latitude
-        - longitude
-        - eLoc
-        - entryLatitude
-        - entryLongitude
-        - placeName
-        - alternateName
-        - keywords
-        - addressTokens
-        - p
-        - orderIndex
-        - score
-        - suggester
-        - richInfo
-      properties:
-        type:
-          type: string
-          description: This is the type whether the results is POI or any building point.
-          format: string
-          example: 'POI'
-        typeX:
-          type: integer
-          description: This is the number given by the search API result.
-          format: integer
-          example: '7'
-        placeAddress:
-          type: string
-          description: This is the address of the text searched by you.
-          format: string
-          example: 'Yippee Rooms, Sector 56, Gurugram, Haryana, 122011'
-        latitude:
-          type: string
-          description: It shows us the latitude of the location searched.
-          format: double
-          example: '28.4263350000001'
-        longitude:
-          type: string
-          description: It shows us the longitude of the location searched.
-          format: double
-          example: '77.092001'
-        eLoc:
-          type: string
-          description: It is the Six or eight digit unique code offered only by mapmyindia to search for any address through this eLoc.
-          format: string
-          example: '2LH9OC'
-        entryLatitude:
-          type: string
-          description: It shows us the entry latitude of the location searched.
-          format: double
-          example: '28.426407'
-        entryLongitude:
-          type: string
-          description: It shows us the entry longitude of the location searched.
-          format: double
-          example: '77.092232'
-        placeName:
-          type: string
-          description: This shows the name of the POI
-          format: string
-          example: OYO Hotel
-        alternateName: 
-          type: string
-          description: This shows the alternate name of the POI
-          format: string
-          example: OyoRooms,OYO 40400 Yippe Rooms,OYO Rooms Hotel
-        keywords:
-          type: array
-          description: The keywords/category codes associated with the given result.
-          items:
-            type: string
-          format: array of strings
-          example: TRNPMP
-        addressTokens:
-          $ref: '#/components/schemas/addressTokens'
-        p:
-          type: integer
-          description: This shows the priority of the POI
-          format: integer
-          example: 11663
-        orderIndex:
-          type: integer
-          description: This shows the order of the search results priority wise.
-          format: integer
-          example: 1
-        score:
-          type: string
-          description: This shows the score of the POI.
-          format: string
-          example: 1.5075794782130676
-        suggester:
-          type: string
-          description: This shows on which basis the search results has been found.
-          format: string
-          example: alternateName
-        richInfo:
-          type: array
-          description: This shows the rich info associated with the given result.
-          items:
-            type: string
-          format: array of strings
-          example: ''
-
-    geocodeResults:
-      title: Geocode Results
-      description: The result object which contains the Geocode API results.
-      type: object
-      required:
-        - copResults
-      properties:
-        copResults:
-          $ref: '#/components/schemas/copResult'
-
-    nearbyResults:
-      title: Nearby Results
-      description: The result object which contains the Nearby API results.
-      type: object
-      required:
-        - suggestedLocations
-      properties:
-        suggestedLocations:
-          $ref: '#/components/schemas/suggestedLocations'
-    suggestedLocations:
-      title: Suggested Locations
-      required:
-        - distance
-        - eloc
-        - email
-        - entryLatitude
-        - entryLongitude
-        - keywords
-        - landlineNo
-        - latitude
-        - longitude
-        - mobileNo
-        - orderIndex
-        - placeAddress
-        - placeName
-        - type
-      type: object
-      properties:
-        distance:
-          type: string
-          format: string
-          example: 64
-          description: provides the distance from the provided location bias in meters
-        eloc:
-          type: string
-          format: string
-          example: CHZZ3S
-          description: Place Id of the location 6-char alphanumeric
-        email:
-          type: string
-          format: string
-          example: xyz@email.com
-          description: Email for contact
-        entryLatitude:
-          type: number
-          format: double
-          example: 28.631708
-          description: latitude of the entrance of the location
-        entryLongitude:
-          type: number
-          format: double
-          example: 77.21665
-          description: longitude of the entrance of the location
-        keywords:
-          type: array
-          description: The keywords/category codes associated with the given result.
-          items:
-            type: object
-          format: array of object
-          example: TRNPMP
-        landlineNo:
-          type: number
-          format: integer
-          example: 911133107634
-          description: phone no for contact
-        latitude:
-          type: number
-          format: double
-          example: 28.631834
-          description: Latitude of the location
-        longitude:
-          type: number
-          format: double
-          example: 77.2169160000001
-          description: longitude of the location
-        mobileNo:
-          type: number
-          format: integer
-          example: 919999827144
-          description: Phone number for contact
-        orderIndex:
-          type: integer
-          format: integer
-          example: 1
-          description: the order where this result should be placed
-        placeAddress:
-          type: string
-          format: string
-          example: 'G-72, 1st Floor, Outer Circle, Connaught Place, New Delhi, Delhi, 110001'
-          description: Address of the location
-        placeName:
-          type: string
-          format: string
-          example: Lord of The Drinks
-          description: Name of the location
-        type:
-          type: string
-          format: string
-          example: poi
-          description: Type of location POI or Country or City
-    
-    TextSearchAPIResults:
-      title: Text Search API Results
-      description: The result object which contains the Text Search API results.
-      type: object
-      required:
-        - suggestedLocation
-        - userAddedLocation
-      properties:
-        suggestedLocations:
-          $ref: '#/components/schemas/suggestedLocation'
-        userAddedLocation:
-          $ref: '#/components/schemas/userAddedLocation'
-
-    reverseGeocodeAPIResults:
-      title: Reverse Geocode API Results
-      description: The result object which contains the Reverse Geocode API results.
-      type: object
-      required:
-        - responseCode
-        - version
-        - results
-      properties:
-        responseCode:
-          type: number
-          description: This shows the response code of the results.
-          format: string
-          example: 200
-        version:
-          type: integer
-          description: This shows the API version
-          format: string
-          example: 211.19
-        results:
-          type: object
-          description: The object contains the results of the reverse geocode API.
-          $ref: '#/components/schemas/results'
-    
-    eLocResults:
+    EL1:
       title: eLoc API Results
       description: The result object which contains the eLoc API results.
       type: object
@@ -289,21 +140,137 @@ components:
         - results
       properties:
         responseCode:
-          type: number
+          type: integer
           description: This shows the response code of the results.
-          format: string
+          format: integer
           example: 200
         version:
-          type: integer
+          type: string
           description: This shows the API version
           format: string
-          example: 211.19
+          example: '211.19'
         results:
-          type: object
+          type: array
           description: The object contains the results of the reverse geocode API.
-          $ref: '#/components/schemas/results'
-    
-    results:
+          items:
+            $ref: '#/components/schemas/EL2'
+    EL2:
+      title: eLoc results object
+      description: The result object which contains the Reverse Geocode API results.
+      type: object
+      required:
+        - district
+        - city
+        - state
+        - lat
+        - lng
+        - formatted_address
+      properties:
+        houseNumber:
+          type: string
+          description: 'House Number of the POI.'
+          format: string
+          example: '237'
+        houseName:
+          type: string
+          description: 'House Name of the POI.'
+          format: string
+          example: 'MMI Building'
+        poi:
+          type: string
+          description: 'Name of the POI.'
+          format: string
+          example: 'MapmyIndia Head Office'
+        street:
+          type: string
+          description: 'Name of the street.'
+          format: string
+          example: 'Unnamed Road'
+        subSubLocality:
+          type: string
+          description: 'Name of the subsublocality.'
+          format: string
+          example: ''
+        subLocality:
+          type: string
+          description: 'Name of the sublocality.'
+          format: string
+          example: ''
+        locality:
+          type: string
+          description: 'Name of the locality.'
+          format: string
+          example: 'Okhla industrial phase 3'
+        village:
+          type: string
+          description: 'Name of the village.'
+          format: string
+          example: 'Okhla Vilage'
+        subDistrict:
+          type: string
+          description: 'Name of the subDistrict.'
+          format: string
+          example: ''
+        city:
+          type: string
+          description: 'Name of the city.'
+          format: string
+          example: 'New Delhi'
+        state:
+          type: string
+          description: 'Name of the state.'
+          format: string
+          example: 'Delhi'
+        pincode:
+          type: integer
+          description: 'Pincode of the location.'
+          format: string
+          example: '110010'
+        longitude:
+          type: string
+          description: 'It shows us the longitude of the location searched.'
+          format: double
+          example: '77.092001'
+        latitude:
+          type: string
+          description: 'It shows us the latitude of the location searched.'
+          format: double
+          example: '28.426335'
+        type:
+          type: string
+          description: ''
+          format: string
+          example: 'POI'
+        place_id:
+          type: string
+          description: 'Place ID of the POI.'
+          format: string
+          example: 'MMI000'
+    RG1:
+      title: Reverse Geocode API Results
+      description: The result object which contains the Reverse Geocode API results.
+      type: object
+      required:
+        - responseCode
+        - version
+        - results
+      properties:
+        responseCode:
+          type: integer
+          description: This shows the response code of the results.
+          format: integer
+          example: 200
+        version:
+          type: string
+          description: This shows the API version
+          format: string
+          example: '211.19'
+        results:
+          type: array
+          description: The object contains the results of the reverse geocode API.
+          items:
+            $ref: '#/components/schemas/RG2'
+    RG2:
       title: Reverse geocode results object
       description: The result object which contains the Reverse Geocode API results.
       type: object
@@ -317,799 +284,91 @@ components:
       properties:
         houseNumber:
           type: string
-          description: House Number of the POI.
+          description: 'House Number of the POI.'
           format: string
           example: '237'
         houseName:
           type: string
-          description: House Name of the POI.
+          description: 'House Name of the POI.'
           format: string
           example: 'MMI Building'
         poi:
           type: string
-          description: Name of the POI.
+          description: 'Name of the POI.'
           format: string
           example: 'MapmyIndia Head Office'
         poi_dist:
-          type: integer
-          description: The value of the poi district
-          format: integer
-          example: 8
+          type: string
+          description: 'The value of the poi district'
+          format: string
+          example: '8'
         street:
           type: string
-          description: Name of the street.
+          description: 'Name of the street.'
           format: string
           example: 'Unnamed Road'
         street_dist:
-          type: integer
-          description: The value of the street district
-          format: integer
-          example: 14
+          type: string
+          description: 'The value of the street district.'
+          format: string
+          example: '14'
         subSubLocality:
           type: string
-          description: Name of the subsublocality.
+          description: 'Name of the subsublocality.'
           format: string
           example: ''
         subLocality:
           type: string
-          description: Name of the sublocality.
+          description: 'Name of the sublocality.'
           format: string
           example: ''
         locality:
           type: string
-          description: Name of the locality.
+          description: 'Name of the locality.'
           format: string
           example: 'Okhla industrial phase 3'
         village:
           type: string
-          description: Name of the village.
+          description: 'Name of the village.'
           format: string
           example: 'Okhla Vilage'
         subDistrict:
           type: string
-          description: Name of the subDistrict.
+          description: 'Name of the subDistrict.'
           format: string
           example: ''
         city:
           type: string
-          description: Name of the city.
+          description: 'Name of the city.'
           format: string
           example: 'New Delhi'
         state:
           type: string
-          description: Name of the STATE.
+          description: 'Name of the state.'
           format: string
           example: 'Delhi'
         pincode:
           type: integer
-          description: PINcode of the location.
+          description: 'Pincode of the location.'
           format: string
           example: '110010'
         lat:
           type: string
-          description: It shows us the latitude of the location searched.
+          description: 'It shows us the latitude of the location searched.'
           format: double
-          example: '28.4263350000001'
+          example: '28.426335'
         lng:
           type: string
-          description: It shows us the longitude of the location searched.
+          description: 'It shows us the longitude of the location searched.'
           format: double
           example: '77.092001'
         area:
           type: string
           description: 'It shows the area on which the result has been found. for eg: India, Bangladesh, etc.'
           format: string
-          example: India
+          example: 'India'
         formatted_address:
           type: string
-          description: This shows the formatted address of the POI.
+          description: 'This shows the formatted address of the POI.'
           format: string
-          example: 237, MMI Building, MapmyIndia Head Office, Okhla industrial phase 3, Okhla Vilage, South Delhi, New Delhi, Delhi, 110010
-
-    suggestedLocation:
-      title: Suggested Location
-      description: The result object which contains the Auto Suggest API results.
-      type: object
-      required:
-        - type
-        - typeX
-        - placeAddress
-        - latitude
-        - longitude
-        - eLoc
-        - entryLatitude
-        - entryLongitude
-        - placeName
-        - alternateName
-        - keywords
-        - p
-        - distance
-        - orderIndex
-        - score
-        - suggester
-        - addressTokens
-        - richInfo
-      properties:
-        type:
-          type: string
-          description: This is the type whether the results is POI or any building point.
-          format: string
-          example: 'POI'
-        typeX:
-          type: integer
-          description: This is the number given by the search API result.
-          format: integer
-          example: '7'
-        placeAddress:
-          type: string
-          description: This is the address of the text searched by you.
-          format: string
-          example: 'Yippee Rooms, Sector 56, Gurugram, Haryana, 122011'
-        latitude:
-          type: string
-          description: It shows us the latitude of the location searched.
-          format: double
-          example: '28.4263350000001'
-        longitude:
-          type: string
-          description: It shows us the longitude of the location searched.
-          format: double
-          example: '77.092001'
-        eLoc:
-          type: string
-          description: It is the Six or eight digit unique code offered only by mapmyindia to search for any address through this eLoc.
-          format: string
-          example: '2LH9OC'
-        entryLatitude:
-          type: string
-          description: It shows us the entry latitude of the location searched.
-          format: double
-          example: '28.426407'
-        entryLongitude:
-          type: string
-          description: It shows us the entry longitude of the location searched.
-          format: double
-          example: '77.092232'
-        placeName:
-          type: string
-          description: This shows the name of the POI
-          format: string
-          example: OYO Hotel
-        alternateName: 
-          type: string
-          description: This shows the alternate name of the POI
-          format: string
-          example: OyoRooms,OYO 40400 Yippe Rooms,OYO Rooms Hotel
-        keywords:
-          type: array
-          description: The keywords/category codes associated with the given result.
-          items:
-            type: string
-          format: array of strings
-          example: TRNPMP
-        p:
-          type: integer
-          description: This shows the priority of the POI
-          format: integer
-          example: 11663
-        distance:
-          type: string
-          description: for internal use only
-          format: integer
-          example: 0
-        orderIndex:
-          type: integer
-          description: This shows the order of the search results priority wise.
-          format: integer
-          example: 1
-        score:
-          type: string
-          description: This shows the score of the POI.
-          format: string
-          example: 1.5075794782130676
-        suggester:
-          type: string
-          description: This shows on which basis the search results has been found.
-          format: string
-          example: alternateName
-        addressTokens:
-          $ref: '#/components/schemas/addressTokens'
-        richInfo:
-          type: array
-          description: This shows the rich info associated with the given result.
-          items:
-            type: string
-          format: array of strings
-          example: ''
-    userAddedLocation:
-      title: User Added Location
-      description: The result object which contains the user added POI results.
-      type: array
-      items:
-        type: object
-    copResult:
-      title: copResult
-      description: This shows the array of results when the iemcount is more than 1.
-      type: object
-      required:
-        - district
-        - city
-        - state
-        - formattedAddress
-        - eLoc
-        - latitude
-        - longitude
-        - geocodeLevel
-        - confidenceScore
-      properties:
-        houseNumber:
-          type: string
-          description: House Number of the POI.
-          format: string
-          example: '237'
-        houseName:
-          type: string
-          description: House Name of the POI.
-          format: string
-          example: 'MMI Building'
-        poi:
-          type: string
-          description: Name of the POI.
-          format: string
-          example: 'MapmyIndia Head Office'
-        street:
-          type: string
-          description: Name of the street.
-          format: string
-          example: ''
-        subSubLocality:
-          type: string
-          description: Name of the subsublocality.
-          format: string
-          example: ''
-        subLocality:
-          type: string
-          description: Name of the sublocality.
-          format: string
-          example: ''
-        locality:
-          type: string
-          description: Name of the locality.
-          format: string
-          example: 'Okhla industrial phase 3'
-        village:
-          type: string
-          description: Name of the village.
-          format: string
-          example: 'Okhla Vilage'
-        subDistrict:
-          type: string
-          description: Name of the subDistrict.
-          format: string
-          example: ''
-        district:
-          type: string
-          description: Name of the District.
-          format: string
-          example: 'South Delhi'
-        city:
-          type: string
-          description: Name of the city.
-          format: string
-          example: 'New Delhi'
-        state:
-          type: string
-          description: Name of the STATE.
-          format: string
-          example: 'Delhi'
-        pincode:
-          type: integer
-          description: PINcode of the location.
-          format: string
-          example: '110010'
-        formattedAddress:
-          type: string
-          description: This shows the formatted address of the POI.
-          format: string
-          example: 237, MMI Building, MapmyIndia Head Office, Okhla industrial phase 3, Okhla Vilage, South Delhi, New Delhi, Delhi, 110010
-        eLoc:
-          type: string
-          description: It is the Six or eight digit unique code offered only by mapmyindia to search for any address through this eLoc.
-          format: string
-          example: '2LH9OC'
-        latitude:
-          type: string
-          description: It shows us the latitude of the location searched.
-          format: double
-          example: '28.4263350000001'
-        longitude:
-          type: string
-          description: It shows us the longitude of the location searched.
-          format: double
-          example: '77.092001'
-        geocodeLevel:
-          type: string
-          description: This shows the level of the geocode means on which basis the poi has been geocoded.
-          format: string
-          example: houseNumber
-        confidenceScore:
-          type: string
-          description: The confidence for current of geocodelevel.
-          format: float
-          example: 0.4
-        property:
-          type: string
-    addressTokens:
-      title: tokenizeAddress
-      description: It shows the admin details along with the house address.
-      type: object
-      required:
-        - district
-        - city
-        - state
-      properties:
-        houseNumber:
-          type: string
-          description: House Number of the POI.
-          format: string
-          example: '237'
-        houseName:
-          type: string
-          description: House Name of the POI.
-          format: string
-          example: 'MMI Building'
-        poi:
-          type: string
-          description: Name of the POI.
-          format: string
-          example: 'MapmyIndia Head Office'
-        street:
-          type: string
-          description: Name of the street.
-          format: string
-          example: ''
-        subSubLocality:
-          type: string
-          description: Name of the subsublocality.
-          format: string
-          example: ''
-        subLocality:
-          type: string
-          description: Name of the sublocality.
-          format: string
-          example: ''
-        locality:
-          type: string
-          description: Name of the locality.
-          format: string
-          example: 'Okhla industrial phase 3'
-        village:
-          type: string
-          description: Name of the village.
-          format: string
-          example: 'Okhla Vilage'
-        subDistrict:
-          type: string
-          description: Name of the subDistrict.
-          format: string
-          example: ''
-        district:
-          type: string
-          description: Name of the District.
-          format: string
-          example: 'South Delhi'
-        city:
-          type: string
-          description: Name of the city.
-          format: string
-          example: 'New Delhi'
-        state:
-          type: string
-          description: Name of the STATE.
-          format: string
-          example: 'Delhi'
-        pincode:
-          type: integer
-          description: PINcode of the location.
-          format: string
-          example: '110010'
-        property:
-          type: string
-    
-
-  securitySchemes:
-    bearerToken:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
-paths:
-  /api/places/search/json:
-    get:
-      tags: 
-        - Auto Suggest API
-      description: '_**Autosuggest is an API that returns information about a set of places based on a string.**_'
-      summary: Returns the list of the suggested locations on the basis of the query passed which can be a string or a category code.
-      operationId: TextSearchAPI
-      parameters:
-        - name: query
-          in: query
-          description: _Enter the query on which the search has to be done._
-          required: true
-          allowEmptyValue: false
-          schema: 
-            type: string
-        - name: location
-          in: query
-          description: _Enter the latitude & longitude in the form of comma separated._
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: zoom
-          in: query
-          description: _It takes the zoom level of the current scope of the map(min:4, max:18)._
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: integer
-        - name: region
-          in: query
-          description: _It takes in the country code. LKA, IND, BTN, BGD, NPL for Sri-Lanka, India, Bhutan, Bangladesh, Nepal respectively. Default is India (IND)._
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: pod
-          in: query
-          description: '_It takes in the place type code which helps in restricting the results to certain chosen type.<br/>
-            Below mentioned are the codes for the pod -<br/>
-            1. SLC: Sublocality<br/>
-            2. LC: Locality<br/>
-            3. CITY: City<br/>
-            4. VLG: Village<br/>
-            5. SDIST: Subdistrict<br/>
-            6. DIST: District<br/>
-            7. STATE: State<br/>
-            8. SSLC: Subsublocality<br/>_'
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: filter
-          in: query
-          description: _This parameter helps you restrict the result either by mentioning a bounded area or to certain eloc (6 digit code to any poi, locality, city, etc.), below mentioned are the both types:_<br/>_a. filter_ _= bounds lat1,lng1;lat2,lng2(latitude,longitude){e.g. filter=bounds 28.598882, 77.212407; 28.467375, 77.353513}_ <br/>_b. filter = cop {eloc} (string) {e.g. filter=cop:YMCZ0J}_
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AutosuggestAPIResults'
-        '204':
-          description: Not found
-        '400':
-          description: Bad request
-        '401':
-          description: API access denied
-        '403':
-          description: Forbidden
-        '500':
-          description: Something went wrong
-        '503':
-          description: Internal server error
-      deprecated: false
-  /api/places/geocode:
-    get:
-      tags:
-        - Geocoding API
-      description: '_**This api returns the latitude & longitude of the searched string.**_'
-      summary: 'This api returns the admin details along with address and latitude longitude of the searched string.'
-      operationId: AtlasGeocodeAPI
-      parameters:
-        - name: address
-          in: query
-          description: _Enter the address to be geocoded_.
-          required: true
-          allowEmptyValue: false
-          schema: 
-            type: string
-        - name: itemCount
-          in: query
-          description: _Enter the number of how many results do you need_.
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: bias
-          in: query
-          description: '_This parameter can be used to set Urban or Rural bias. A positive value sets the Urban bias and a negative value sets Rural bias. Allowed values are:<br/>
-          0 : Default: (No bias)<br/>
-          -1 : Rural<br/>
-          1 : Urban_'
-          required: false
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: podFilter
-          in: query
-          description: '_This parameter can be used to set admin level restriction. The result will be either the given admin level or equivalent admin or higher in the hierarchy. No lower admin will be considered for geocoding.<br/> Allowed values are:<br/><li>
-          hno : house number<br/><li>
-          hna : house name<br/><li>
-          poi : point of interest<br/><li>
-          street : street<br/><li>
-          sslc : sub sub locality<br/><li>
-          village : village<br/><li>
-          slc : sub locality<br/><li>
-          sdist : sub district<br/><li>
-          loc : locality<br/><li>
-          city : city<br/><li>
-          dist : district<br/><li>
-          pincode :pincode<br/><li>
-          state : state_'
-          schema:
-            type: string
-        - name: bound
-          in: query
-          description: _This parameter can be used to set admin boundary, which means geocoding will be done within the given admin. The allowed admin bounds are Sub-District, District, City, State and Pincode. The parameter accepts the admin eLoc as value._
-          schema:
-            type: string
-        - name: scores
-          in: query
-          description: _This parameter can be set to get scoring related parameters from the API_.
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/geocodeResults'
-        '204':
-          description: Not found
-        '400':
-          description: Bad request
-        '401':
-          description: API access denied
-        '403':
-          description: Forbidden
-        '500':
-          description: Something went wrong
-        '503':
-          description: Internal server error
-      deprecated: false
-
-  /api/places/nearby/json:
-    get:
-      tags:
-        - Nearby API
-      description: '_**Nearby Places API, enables you to add discovery and search of nearby POIs by searching for a generic keyword used to describe a category of places or via the unique code assigned to that category.**_'
-      summary: This API returns the nearby POI of the Category Code entered by you.
-      operationId: AtlasNearbyAPI
-      parameters:
-        - name: query
-          in: query
-          description: _Enter the query on which the search has to be done._
-          required: true
-          allowEmptyValue: false
-          schema: 
-            type: string
-        - name: region
-          in: query
-          description: '_Provides the location around which the search will be performed_'
-          allowEmptyValue: false
-          required: false
-          schema:
-            type: string
-        - name: location
-          in: query
-          description: '_Provides number of the page to provide results from_'
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: sort
-          in: query
-          description: '_Provides configured sorting operations for the client on cloud._ Below are the available sorts:<br/>
-          a) **dist:asc & dist:desc** - will sort data in order of distance from the passed location (default).<br/>
-          b) **name:asc & name:desc** - will sort the data on alphabetically bases.'
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: radius
-          in: query
-          description: '_Provides the range of distance to search over (default 1000, min, 500, max, 10000)_'
-          allowEmptyValue: false
-          schema:
-            type: string
-        - name: bounds
-          in: query
-          description: '_(x1,y1;x2,y2) Allows the developer to send in map bounds to provide a nearby search of the geobounds. where x1,y1 are the lat lng of_'
-          allowEmptyValue: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/nearbyResults'
-        '204':
-          description: Not found
-        '400':
-          description: Bad request
-        '401':
-          description: API access denied
-        '403':
-          description: Forbidden
-        '500':
-          description: Something went wrong
-        '503':
-          description: Internal server error
-      deprecated: false
-  /api/places/textsearch/json:
-      get:
-        tags:
-          - Text Search API
-        description: '_**Text Search API is a service that aims to provide information about a list of places on the basis of a text string entered by the user. It uses the location information that is provided along with the query to try to understand the request.**_'
-        summary: This API returns the POI of the text entered by you.
-        operationId: AtlasTextSearchAPI
-        parameters:
-          - name: query
-            in: query
-            description: '_e.g. FODCOF, Shoes, Coffee, Versace, Gucci, H&M, Adidas, Starbucks, B130 {POI, House Number, keyword, tag}_'
-            allowEmptyValue: false
-            required: true
-            schema:
-              type: string
-          - name: region
-            in: query
-            description: '_It takes in the country code. LKA, IND, BTN, BGD, NPL for Sri-Lanka, India, Bhutan, Bangladesh, Nepal respectively. Default is India (IND)_'
-            allowEmptyValue: false
-            schema:
-              type: string
-          - name: location
-            in: query
-            description: '_Provides the location around which the search will be performed. e.g. location=28.454,77.435 It is STRONGLY RECOMMENDED to use this parameter for accurate location biased results._'
-            allowEmptyValue: false
-            schema:
-              type: string
-        responses:
-          '200':
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/TextSearchAPIResults'
-          '204':
-            description: Not found
-          '400':
-            description: Bad request
-          '401':
-            description: API access denied
-          '403':
-            description: Forbidden
-          '500':
-            description: Something went wrong
-          '503':
-            description: Internal server error
-        deprecated: false 
-  
-  /advancedmaps/v1/{REST_KEY}/rev_geocode:
-      get:
-        tags:
-          - Reverse Geocode API
-        description: '_**Reverse Geocoding is a process to give the closest matching address to a provided geographical coordinates (latitude/longitude). MapmyIndia reverse geocoding API provides real addresses along with nearest popular landmark for any such geo-positions on the map.**_'
-        summary: This API returns the POI of the lat lng entered by you.
-        operationId: ReverseGeocodeAPI
-        parameters:
-          - name: lat
-            in: query
-            description: '_The latitude of the location_'
-            allowEmptyValue: false
-            required: true
-            schema:
-              type: string
-          - name: lng
-            in: query
-            description: '_The longitude of the location_'
-            allowEmptyValue: false
-            required: true
-            schema:
-              type: string
-          - name: REST_KEY
-            in: path
-            description: The rest key allocated to your account.
-            allowEmptyValue: false
-            required: true
-            schema:
-              type: string
-          - name: region
-            in: query
-            description: '_It takes in the country code. LKA, IND, BTN, BGD, NPL for Sri-Lanka, India, Bhutan, Bangladesh, Nepal respectively. Default is India (IND)_'
-            allowEmptyValue: false
-            schema:
-              type: string
-        responses:
-          '200':
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/reverseGeocodeAPIResults'
-          '204':
-            description: Not found
-          '400':
-            description: Bad request
-          '401':
-            description: API access denied
-          '403':
-            description: Forbidden
-          '500':
-            description: Something went wrong
-          '503':
-            description: Internal server error
-        deprecated: false
-      parameters:
-      - name: REST_KEY
-        in: query
-        description: '_The REST API licence key allocated to you by signing into our services and registering yourself as a developer._'
-        allowEmptyValue: false
-        required: true
-        schema:
-          type: string
-  /advancedmaps/v1/{REST_KEY}/place_detail:
-      get:
-        tags:
-          - eLoc API
-        description: '_**MapmyIndia eloc is a simple, standardized and precise pan-India digital address system. Every location has been assigned a unique digital address or an eLoc. The eLoc API can be used to extract the details of a place with the help of its eLoc i.e. a 6 digit code or a place_id.**_'
-        summary: This API returns the POI of the lat lng entered by you.
-        operationId: eLocAPI
-        parameters:
-          - name: place_id
-            in: query
-            description: '_Six or Eight Digit unique code_'
-            allowEmptyValue: false
-            required: true
-            schema:
-              type: string
-          - name: REST_KEY
-            in: path
-            description: '_The REST API licence key allocated to you by signing into our services and registering yourself as a developer._'
-            allowEmptyValue: false
-            required: true
-            schema:
-              type: string
-          - name: region
-            in: query
-            description: '_It takes in the country code. LKA, IND, BTN, BGD, NPL for Sri-Lanka, India, Bhutan, Bangladesh, Nepal respectively. Default is India (IND)_'
-            allowEmptyValue: false
-            schema:
-              type: string
-        responses:
-          '200':
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/eLocResults'
-          '204':
-            description: Not found
-          '400':
-            description: Bad request
-          '401':
-            description: API access denied
-          '403':
-            description: Forbidden
-          '500':
-            description: Something went wrong
-          '503':
-            description: Internal server error
-        deprecated: false
-security:
-  - bearerToken: []
+          example: '237, MMI Building, MapmyIndia Head Office, Okhla industrial phase 3, Okhla Vilage, South Delhi, New Delhi, Delhi, 110010'
