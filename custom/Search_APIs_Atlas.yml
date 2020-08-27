@@ -322,6 +322,48 @@ paths:
           '503':
             description: Internal server error
         deprecated: false
+  /api/places/woodpecker:
+      get:
+        tags:
+          - Address Standardization API
+        description: 'Address Standardization API is a process to convert the non formatted address into the user readable format by omitting unnecessary information in the address. MapmyIndia address standardization API provides real addresses along with admin and other information.'
+        summary: This API returns the structured address entered by you.
+        operationId: WoodpeckerAPI
+        parameters:
+          - name: address
+            in: query
+            description: 'e.g. 237 Okhla industrial estate phase 3 new Delhi, Delhi 110020'
+            allowEmptyValue: false
+            required: true
+            example: '237 Okhla industrial estate phase 3 new Delhi, Delhi 110020'
+            schema:
+              type: string
+          - name: bias
+            in: query
+            description: 'parameter value can be set to get the bias result towards the urban or rural side. (Default is 1.5 : urban). Where 1 is neutral and < 1 is rural biased and > 1 is Urban biased.'
+            allowEmptyValue: false
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/WoodpeckerResults'
+          '204':
+            description: Not found
+          '400':
+            description: Bad request
+          '401':
+            description: API access denied
+          '403':
+            description: Forbidden
+          '500':
+            description: Something went wrong
+          '503':
+            description: Internal server error
+        deprecated: false
 components:
   schemas:
     AutosuggestAPIResults:
@@ -919,10 +961,199 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AS2'
+    WoodpeckerResults:
+      title: Woodpecker Result
+      description: The result object which contains the Address Standardization API results.
+      type: object
+      required: 
+        - inputAddress
+        - remainingAddress
+        - referentialInformation
+        - addressInformation
+      properties:
+        inputAddress:
+          type: string
+          description: this is the address entered by the user.
+          format: string
+          example: '237, MapmyIndia Head Office, Okhla Phase 3, New Delhi, Delhi 110010'
+        remainingAddress:
+          type: string
+          description: this is the address striked out by the API.
+          format: string
+          example: 'mapmyindia head office, okhla new'
+        referentialInformation:
+          $ref: '#/components/schemas/WP1'
+        addressInformation:
+          $ref: '#/components/schemas/WP3'
+    WP1:
+      title: Woodpecker Referential Information
+      description: The result object which contains the Address Standardization API results.
+      type: object
+      required:
+        - pincodes
+        - floors
+        - roads
+        - postOffices
+        - careOfs
+        - landmarks
+        - houseNumbers
+      properties:
+        pincodes:
+          type: string
+          description: PIN code tagged from input address if found any.
+          format: string
+          example: '110010'
+        floors:
+          type: string
+          description: Floor info tagged from input address if found any.
+          format: string
+          example: 'Floor No 1'
+        roads:
+          type: string
+          description: Road tagged from the input address if found any.
+          format: string
+          example: 'Okhla Road'
+        postOffices:
+          type: string
+          description: Post offices tagged from the input address if found any.
+          format: string
+          example: ''
+        careOfs:
+          type: string
+          description: Care of (C/O) tagged from the input address if found any.
+          format: string
+          example: ''
+        landmarks:
+          type: string
+          description: Landmark tagged from the input address if found any.
+          format: string
+          example: ''
+        houseNumbers:
+          description: House number information tagged from the input address if found any.
+          $ref: '#/components/schemas/WP2'
+    WP2:
+      title: House Numbers Array
+      description: The result object which contains the House Number Arrays of Woodpecker API.
+      type: object
+      required:
+        - prefix
+        - houseNo
+        - formatted
+      properties:
+        prefix:
+          type: string
+          description: ''
+          format: string
+          example: ''
+        houseNo:
+          type: string
+          description: ''
+          format: string
+          example: '237'
+        formatted:
+          type: string
+          description: ''
+          format: string
+          example: '237'
+    WP3:
+      title: Address Information Object
+      description: The result object which contains the Address Standardization API results.
+      type: object
+      required:
+        - adminDetails
+        - adminPattern
+      properties:
+        adminDetails:
+          $ref: '#/components/schemas/WP4'
+        adminPattern:
+          type: array
+          items:
+            $ref: '#/components/schemas/WP10'
+    WP4:
+      title: Admin Details of Woodpecker API
+      description: The result object which contains the Admin Details of Address Standardization API results
+      type: object
+      required:
+        - state
+        - locality
+        - city
+        - sublocality
+        - subsublocality
+      properties:
+        state:
+          $ref: '#/components/schemas/WP5'
+        locality:
+          $ref: '#/components/schemas/WP6'
+        city:
+          $ref: '#/components/schemas/WP7'
+        sublocality:
+          $ref: '#/components/schemas/WP8'
+        subsublocality:
+          $ref: '#/components/schemas/WP9'
+    WP5:
+      title: State Original Name
+      type: object
+      required:
+        - originalName
+      properties:
+        originalName:
+          type: string
+          description: ''
+          format: string
+          example: 'Delhi'
+    WP6:
+      title: locality Original Name
+      type: object
+      required:
+        - originalName
+      properties:
+        originalName:
+          type: string
+          description: ''
+          format: string
+          example: 'New Moti Nagar'
+    WP7:
+      title: city Original Name
+      type: object
+      required:
+        - originalName
+      properties:
+        originalName:
+          type: string
+          description: ''
+          format: string
+          example: 'New Delhi'
+    WP8:
+      title: sublocality Original Name
+      type: object
+      required:
+        - originalName
+      properties:
+        originalName:
+          type: string
+          description: ''
+          format: string
+          example: 'Phase 3'
+    WP9:
+      title: subsublocality Original Name
+      type: object
+      required:
+        - originalName
+      properties:
+        originalName:
+          type: string
+          description: ''
+          format: string
+          example: 'Okhla'
+    WP10:
+      title: Admin Pattern of Woodpecker API
+      description: The result object which contains the Admin Pattern of Address Standardization API results
+      type: object
+      properties:
   securitySchemes:
     bearerToken:
       type: http
       scheme: bearer
-      bearerFormat: JWT    
+      bearerFormat: JWT
 security:
   - bearerToken: []
