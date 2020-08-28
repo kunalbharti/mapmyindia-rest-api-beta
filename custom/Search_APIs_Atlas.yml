@@ -1148,8 +1148,8 @@ components:
     WP10:
       title: Admin Pattern of Woodpecker API
       description: The result object which contains the Admin Pattern of Address Standardization API results
-      type: object
-      properties:
+      type: array
+      example: "state"
   securitySchemes:
     bearerToken:
       type: http
