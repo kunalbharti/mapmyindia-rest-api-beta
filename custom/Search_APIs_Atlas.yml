@@ -1068,7 +1068,12 @@ components:
         adminPattern:
           type: array
           items:
-            $ref: '#/components/schemas/WP10'
+            type: string
+          example:
+            - "state"
+            - "city"
+            - "locality"
+            - "subLocality"
     WP4:
       title: Admin Details of Woodpecker API
       description: The result object which contains the Admin Details of Address Standardization API results
