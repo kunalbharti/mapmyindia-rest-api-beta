@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: GET eLocation API
+  description: "The MapmyIndia Search APIs unlocks the Search capabilities of MapmyIndia services to provide developers location based applications. It helps users discover our maps with rich location data point of interest for over 50 million places. **eLocation API** is a service that aims to provide information of a coordinates information"
+  termsOfService: 'http://www.mapmyindia.com/about/terms-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+servers:
+  - url: https://explore.mapmyindia.com
+    description: 'Live Prod server for Atlas APIs'
+paths:
+  /api/apiVersion/places/elocation:
+      get:
+        tags:
+          - eLocation API
+        description: 'eLocation API is a service that aims to provide information of a coordinates information'
+        summary: This API returns the Latitude & Longitude of the eLoc entered by you.
+        operationId: eLocationAPI
+        parameters:
+          - name: query
+            in: query
+            description: 'e.g. MMI000'
+            allowEmptyValue: false
+            required: true
+            example: 'MMI000'
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/eLocationResults'
+          '204':
+            description: Not found
+          '400':
+            description: Bad request
+          '401':
+            description: API access denied
+          '403':
+            description: Forbidden
+          '500':
+            description: Something went wrong
+          '503':
+            description: Internal server error
+        deprecated: false
+components:
+  schemas:
+    eLocationResults:
+      title: eLocation API Results
+      description: The result object which contains the eLocation API results.
+      type: object
+      required:
+        - latitude
+        - longitude
+        - entrylatitude
+        - entrylongitude
+      properties:
+        latitude:
+          type: number
+          description: 'It shows us the latitude of the location searched.'
+          format: double
+          example: 28.4263350000001
+        longitude:
+          type: number
+          description: 'It shows us the longitude of the location searched.'
+          format: double
+          example: 77.092001
+        entryLatitude:
+          type: number
+          description: 'It shows us the entry latitude of the location searched.'
+          format: double
+          example: 28.426407
+        entryLongitude:
+          type: number
+          description: 'It shows us the entry longitude of the location searched.'
+          format: double
+          example: 77.092232
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    
+security:
+  - bearerToken: []
