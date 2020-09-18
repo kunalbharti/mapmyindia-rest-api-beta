@@ -13,7 +13,7 @@ info:
     url: https://www.mapmyindia.com/api/
 servers:
   - url: https://explore.mapmyindia.com
-    description: 'Live Prod server for Atlas APIs'
+    description: 'Live Prod server for Explore APIs'
 paths:
   /api/v1.0.0/places/elocation:
       get:
