@@ -267,7 +267,8 @@ paths:
             type: string
         - name: refLocation
           in: query
-          description: 'Provides the location around which the search will be performed. e.g. `refLocation=28.454,77.435`'
+          description: >-
+            Provides the location around which the search will be performed. e.g. `refLocation=28.454,77.435`. <br> The refLocation parameter can also accept <strong>eLoc</strong> as reference location. <br> This configuration is not active by default. <br>Please contact MapmyIndia API support for further details. <br>Example: <code>refLocation=17ZUL7</code>
           example: "28.454,77.435"
           required: true
           schema:
@@ -352,7 +353,7 @@ paths:
           Text Search API is a service that aims to provide information about a list of places on the basis of a text string entered by the user. It uses the location information that is provided along with the query to try to understand the request. This API now supports Hindi language so you can now search queries in Hindi too.
           <p style=text-align:right><strong><a href="https://github.com/MapmyIndia/mapmyindia-rest-api/tree/master/mapmyindia-textsearch-api">Download Sample Code</a> </p>
         summary: >-
-          Text Search APIs
+          Text Search API
         operationId: AtlasTextSearchAPI
         parameters:
           - name: query
