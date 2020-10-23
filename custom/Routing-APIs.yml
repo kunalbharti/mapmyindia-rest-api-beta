@@ -3,7 +3,7 @@ info:
   title: Routing & Navigation APIs
   description: >-
     Unlock the power of location intelligence for complex routing problems. <br><br>Provide reliable directions as well as cater up-to 98 via points for wander enthusiasts or to make multiple stops to ease shipments. <br><br>We at MapmyIndia engineer rigorously tested routing algorithms for safe and efficient journeys that incorporate anticipated real time traffic updates for the most optimal and energy efficient routes. <br><br>Make hassle free routing experience for your users by creating efficient itineraries for fleets, plan for spikes in traffic or guide rental car customers from their work to their home. <br><br>Put your best foot forward in the industry with MapmyIndia High Performance Routing Engine. <br><br> Note: *<strong>PREMIUM APIs</strong> are not available for evalulation on signup. To get access, please contact API Support.
-  termsOfService: 'http://www.mapmyindia.com/about/terms-conditions'
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
   version: 1.0.0
   license:
     name: MapmyIndia License Key Signup
@@ -543,6 +543,7 @@ paths:
         Snap-To-Road API, snaps given GPS points to the road network in the most plausible way. Maximum number of points are limited to 100 only. Our USP is to take GPS points collected along a route and return a similar set of corrected & aligned data with the points matched to the road with our intelligent Snap To Road API.<br>
         Now seamlessly calculate accurate distances from points which follow the geometry of the road & show accurate positions on map. This API provides a critical feature that is immensely valuable when tracking assets and for data analytics of path traversed by vehicle, people or assets.
         <br><br><strong>Note</strong>: <ol><li>The request might result multiple sub-traces.</li><li>Large jumps in the timestamps (> 60s) or improbable transitions lead to trace splits if a complete matching could not be found.</li><li>The algorithm might not be able to match all points. Outliers are removed if they cannot be matched successfully.</li></ol>
+        <p style=text-align:right><strong><a href="https://www.mapmyindia.com/api/advanced-maps/doc/sample/mapmyindia-maps-snaptoroad-example">Live Demo</a></p>
       summary: Snap to Road API
       operationId: snapToRoadAPI
       parameters: 
@@ -615,7 +616,16 @@ paths:
       tags: 
         - Route Optimization API
       description: >-
-        Route Optimization is the process of determining the most cost-efficient route. It needs to include all relevant factors such as the number and location of all the required stops on the route. In other words, this API will solve the Traveling Salesman Problem of routing and the returned path does not have to be the fastest path. As TSP is NP-hard it only returns an approximation.
+        Route Optimization is the process of determining the most cost-efficient route. It needs to include all relevant factors such as the number and location of all the required stops on the route. In other words, this API will solve the Traveling Salesman Problem of routing and the returned path does not have to be the fastest path. As TSP is NP-hard it only returns an approximation. <br><br>
+        Currently, not all combinations of roundtrip, source and destination are supported. Right now, the following combinations are possible:
+          | roundtrip | source | destination | supported |
+          | --- | --- | --- | --- |
+          | true | first | last | yes |
+          | true | first | any | yes |
+          | true | any | last | yes |
+          | true | any | any | yes |
+          | false | first | any | yes |
+          <br>
         <p style=text-align:right><strong><a href="https://www.mapmyindia.com/api/advanced-maps/doc/sample/RouteOptimization/mapmyindia-vector-maps-route_optimization.php">Live Demo</a> | PREMIUM API* </p>
       summary: Route Optimization API
       operationId: routeOptAPI
