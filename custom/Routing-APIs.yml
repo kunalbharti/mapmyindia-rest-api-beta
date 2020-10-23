@@ -1245,12 +1245,12 @@ components:
           format: string
           example: "250.19.5222"
         responseCode:
-          type: string
+          type: integer
           title: 'responseCode'
           description: >-
              See the service dependent and general status codes
           format: string
-          example: "200"
+          example: 200
         results:
           $ref: '#/components/schemas/DMresults'
     DMresults: 

@@ -81,6 +81,15 @@ paths:
          AutoSuggest API
       operationId: AutoSuggestAPI
       parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: query
           in: query
           description: 'Enter the query on which the search has to be done.'
@@ -175,6 +184,15 @@ paths:
         Geocode API
       operationId: AtlasGeocodeAPI
       parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: address
           in: query
           description: 'address to be geocoded'
@@ -257,6 +275,15 @@ paths:
         Nearby API
       operationId: AtlasNearbyAPI
       parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: keywords
           in: query
           description: 'Enter the query on which the search has to be done.<br><h3>Operators in `Keywords` parameter</h3><h4>To send multiple keywords in a request, we’ve defined a couple of operators that can help the developers wrap their applications around this functionality. Below are the operators:<ol><li>The “ ; ” Operator: This operator is an “or” operator. Defining multiple keywords separated with a “ ; ” would provide results that satisfies either of the keywords.<li>The “ $ ” Operator: This operator is a “and” operator. Defining multiple keywords separated with a “ $ ” would provide results that satisfy all the provided keywords. (default).</ol><br>To use these operators, simple just send in the keywords parameter like below:<br>`&keywords=coffee ; tea $ sea food ; alcohol`<br>The above nearby search would yield in results that either provide coffee or tea but must provide either sea food or alcohol.<br>**Please Note**: the spacing in the above example is of no relevance to the search result. It’s just there to provide better understanding.'
@@ -356,6 +383,15 @@ paths:
           Text Search API
         operationId: AtlasTextSearchAPI
         parameters:
+          - name: Authorization
+            in: header
+            description: >-
+              Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+            required: true
+            allowEmptyValue: false
+            schema:
+              type: string
+            example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
           - name: query
             in: query
             description: 'e.g. FODCOF, Shoes, Coffee, Versace, Gucci, H&M, Adidas, Starbucks, B130 {POI, House Number, keyword, tag}'
@@ -416,6 +452,15 @@ paths:
           Address Standardization API
         operationId: WoodpeckerAPI
         parameters:
+          - name: Authorization
+            in: header
+            description: >-
+              Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+            required: true
+            allowEmptyValue: false
+            schema:
+              type: string
+            example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
           - name: address
             in: query
             description: 'The full human readable address that needs to be standardized'
@@ -583,6 +628,16 @@ paths:
         summary: >-
           POI Along the Route API
         operationId: AtlasPOIAlongtheRouteAPI
+        parameters:
+          - name: Authorization
+            in: header
+            description: >-
+              Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+            required: true
+            allowEmptyValue: false
+            schema:
+              type: string
+            example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         requestBody:
           content:
             'application/x-www-form-urlencoded':
