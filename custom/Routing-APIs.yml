@@ -13,7 +13,7 @@ info:
     email: apisupport@mapmyindia.com
     url: https://www.mapmyindia.com/api/
 servers:
-  - url: https://apis.mapmyindia.com
+  - url: https://apis.mapmyindia.com/advancedmaps/v1
     description: 'Live Prod server for Routing APIs'
 paths:
   /{REST_KEY}/{resources}/{profile}/{coordinates}:
@@ -88,7 +88,6 @@ paths:
           schema:
             type: string
             enum: [route_adv, route_eta, route_traffic]
-            default: route_eta
         - name: profile
           in: path
           description: >-
@@ -146,11 +145,10 @@ paths:
                     </div>
           allowEmptyValue: false
           required: true
-          example: "route_eta"
+          example: "driving"
           schema:
             type: string
             enum: [driving, biking, walking, trucking]
-            default: driving
         - name: coordinates
           in: path
           description: >-
@@ -340,7 +338,6 @@ paths:
           schema:
             type: string
             enum: [distance_matrix, distance_matrix_eta, distance_matrix_traffic]
-            default: distance_matrix_eta
         - name: profile
           in: path
           description: >-
@@ -398,11 +395,10 @@ paths:
                     </div>
           allowEmptyValue: false
           required: true
-          example: "route_eta"
+          example: "driving"
           schema:
             type: string
             enum: [driving, biking, walking, trucking]
-            default: driving
         - name: coordinates
           in: path
           description: >-
