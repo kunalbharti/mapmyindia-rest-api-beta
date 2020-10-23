@@ -87,7 +87,7 @@ paths:
               image/png:
                 schema:
                   format: binary
-                  example: "https://kunalbharti.github.io/mapmyindia-rest-api-beta/stillMapImageResponse.png"
+                  example: "https://kunalbharti.github.io/mapmyindia-rest-api-beta/custom/stillMapImageResponse.png"
           '204':
             description: Not found
           '400':
@@ -190,7 +190,7 @@ paths:
               image/png:
                 schema:
                   format: binary
-                  example: "https://kunalbharti.github.io/mapmyindia-rest-api-beta/stillImagePolylineResponse.png"
+                  example: "https://kunalbharti.github.io/mapmyindia-rest-api-beta/custom/stillImagePolylineResponse.png"
           '204':
             description: Not found
           '400':
