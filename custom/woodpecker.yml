@@ -264,11 +264,6 @@ components:
           description: ''
           format: string
           example: 'Okhla'
-    WP10:
-      title: Admin Pattern of Woodpecker API
-      description: The result object which contains the Admin Pattern of Address Standardization API results
-      type: array
-      example: "state"
   securitySchemes:
     BearerAuth: 
       type: http

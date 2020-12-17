@@ -27,16 +27,16 @@ paths:
         servers:
         - url: https://atlas.mapmyindia.com
           description: 'Live Prod server for OAuth 2 based APIs'
-        parameters:
-          - name: Authorization
-            in: header
-            description: >-
-              Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
-            required: true
-            allowEmptyValue: false
-            schema:
-              type: string
-            example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
+        # parameters:
+        #   - name: Authorization
+        #     in: header
+        #     description: >-
+        #       Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+        #     required: true
+        #     allowEmptyValue: false
+        #     schema:
+        #       type: string
+        #     example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         requestBody:
           content:
             'application/x-www-form-urlencoded':
