@@ -149,13 +149,13 @@ paths:
           schema:
             type: string
             enum: [driving, biking, walking, trucking]
-        - name: coordinates
+        - name: geopositions
           in: path
           description: >-
-            Coordinates are pair of <strong>comma separated longitude & latitude</strong> values. First coordinate will be consider as start point (mandatory); a last coordinate will be considered as end point (mandatory) and those in between are via points (optional). <br>Example: {longitude},{latitude};{longitude},{latitude}[;{longitude},{latitude} ...] (part of URL).
+            geopositions(part of URL) are either: <ul><li>pair of comma separated longitude & latitude values OR</li><li>eLoc(s).</li></ul> First geoposition will be considered as origin point (mandatory); and rest of the geopositions will be considered as destination points (mandatory). <br><br>Example: <code>77.983936,28.255904;77.05993,28.487555</code> OR <code>mmi000</code>. Geoposition separator is a semicolon <code>;</code>.
           allowEmptyValue: false
           required: true
-          example: "77.131123,28.552413;77.113091,28.544649"
+          example: "mmi000;77.983936,28.255904"
           schema:
             type: string
         - name: sources
