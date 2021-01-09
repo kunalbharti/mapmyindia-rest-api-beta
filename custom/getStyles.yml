@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: List Styles API
+  description: >-
+    This API will be internally consumed within our Vector Maps SDKs for listing preset map styles available to any client.
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+security: 
+  - BearerAuth: []
+paths:
+  /getStyles/json:
+      get:
+        tags:
+          - List Styles API
+        description: >-
+          List all styles available according to provisioned styles. The allocated styles to a set of keys can be controlled by claim configuration.
+        summary: >-
+          List Styles API
+        operationId: getStylesAPI
+        servers:
+        - url: https://apis.mapmyindia.com/advancedmaps/v1
+          description: 'Live Prod server for List Styles API'
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items: 
+                    $ref: '#/components/schemas/LS1'
+          '204':
+            description: Not found
+          '400':
+            description: Bad request
+          '401':
+            description: API access denied
+          '403':
+            description: Forbidden
+          '500':
+            description: Something went wrong
+          '503':
+            description: Internal server error
+        deprecated: false
+components:
+  schemas:
+    LS1: 
+      title: Styles results
+      description: >-
+        The array of result objects which contains the style information.
+      type: object
+      required: 
+        - name
+        - owner
+        - imageUrl
+        - styleUrl
+        - version
+        - description
+        - created
+        - modified
+        - visibility
+      properties: 
+        name: 
+          type: string
+          description: >-
+            A human-readable name for the style.
+          example: 'mapmyindia-normal'
+        owner: 
+          type: string
+          description: >-
+            The owner of the style. The client who has created this style: Can be an internal client or an external client.
+          example: 'panasonic-indoor'
+        imageUrl: 
+          type: string
+          description: >-
+            URL of the style's thumbnail image hosted on MapmyIndia Cloud.
+          example: '//styles/standard/mapmyindia-normal.png'
+        styleUrl: 
+          type: string
+          description: >-
+            URL of the style hosted on MapmyIndia Cloud.
+          example: '//styles/standard/mapmyindia-normal.json'
+        version: 
+          type: string
+          description: >-
+            The style specification version number.
+          example: '1.2.3'
+        description: 
+          type: string
+          description: >-
+            A short description of the style.
+          example: 'Standard day mode style for the Vector Maps SDK.'
+        created: 
+          type: integer
+          description: >-
+            The created on date for the style in epoch time.
+          example: 1610172567
+        modified: 
+          type: integer
+          description: >-
+            The modified time of the style in epoch time.
+          example: 1610172568
+        visibility: 
+          type: 'string'
+          description: >-
+            The visibility state of the style: Is the style public (3rd party) or private (1st party).
+          example: 'public'
+  securitySchemes:
+    BearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: 'bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6'
