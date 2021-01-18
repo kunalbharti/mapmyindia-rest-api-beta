@@ -58,6 +58,7 @@ components:
       type: object
       required: 
         - name
+        - isDefault
         - displayName
         - owner
         - imageUrl
@@ -118,6 +119,11 @@ components:
           description: >-
             The name as it appears to third party consumers. Can have spaces and special characters.
           example: 'MapmyIndia Street - Day Mode'
+        isDefault: 
+          type: boolean
+          description: >-
+            If this style is the default style for the client.
+          example: 1
   securitySchemes:
     BearerAuth: 
       type: http
