@@ -58,6 +58,7 @@ components:
       type: object
       required: 
         - name
+        - displayName
         - owner
         - imageUrl
         - styleUrl
@@ -112,6 +113,11 @@ components:
           description: >-
             The visibility state of the style: Is the style public (3rd party) or private (1st party).
           example: 'public'
+        displayName: 
+          type: 'string'
+          description: >-
+            The name as it appears to third party consumers. Can have spaces and special characters.
+          example: 'MapmyIndia Street - Day Mode'
   securitySchemes:
     BearerAuth: 
       type: http
