@@ -19,11 +19,11 @@ paths:
   /{REST_KEY}/{resources}/driving/{geopositions}:
     get: 
       tags: 
-        - Routing API for Four Wheelers
+        - Routing API with Driving Profile
       description: >-
         Routing and displaying driving directions on map, including instructions for navigation, distance to destination, traffic etc. are few of the most important parts of developing a map based application. This REST API calculates driving routes between specified locations including via points based on route calculation type(optimal or shortest).<br>Please note that maximum number of points are limited to 100 only including source and secondary positions.
         <p style=text-align:right><strong><a href="https://www.mapmyindia.com/api/advanced-maps/doc/sample/mapmyindia-maps-route-adv-api-example">Live Demo</a> | <a href="https://github.com/MapmyIndia/mapmyindia-rest-api/tree/master/mapmyindia-routing-api">Download Sample Code</a> </p>
-      summary: Routing API
+      summary: Routing API with driving profile
       operationId: routingAPI
       parameters: 
         - name: REST_KEY
