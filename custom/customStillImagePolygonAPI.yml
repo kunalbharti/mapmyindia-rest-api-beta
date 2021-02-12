@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Regional Polygon Image API
+  description: >-
+      The custom API for 99acres which returns the static map images with the polygons to display in the application. 99acres want to display their polygon data locality wise and zone wise on MapmyIndia maps. <br> MapmyIndia Map Data has been at the forefront of mapping innovations for decades. </br> <br>This API can be used to get a map image with Polygon Boundary of Localities. The image size can be specified, however if the size combination does not fit for the polygon expected API will throw an error. This will dynamically create an image of varying zoom levels for the requested locality polygons on map.<br><br> **Note**: <ol> <li> Output will be static image (png file). </li><li> Not all response parameters mentioned in the below documentation is assured to be present in all the use-cases. The response is dependent on the use-case agreed upon between MapmyIndia & it's API consumer. </i><li> For any further clarifications on what all of the response structure is available for your use case, please contact your business relationship manager or contact MapmyIndia API support.</li></ol>
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+security: 
+  - BearerAuth: []
+paths:
+  /api/still_image_polygon/:
+     get:
+        tags:
+          - Regional Polygon Image API
+        description: >-
+          The custom API for 99acres which returns the static map images with the polygons to display in the application. 99acres want to display their polygon data locality wise and zone wise on MapmyIndia maps.
+        summary: >-
+          Regional Polygon Image API
+        operationId: stillImagePolygonAPI
+        servers:
+         - url: https://atlas.mapmyindia.com
+           description: 'Live Prod server for OAuth 2 based APIs'
+        parameters:
+          # - name: Authorization
+          #   in: header
+          #   description: >-
+          #     Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+          #   required: true
+          #   allowEmptyValue: false
+          #   schema:
+          #     type: string
+          #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
+          - name: locID
+            in: query
+            schema:
+             type: string
+            required: true
+            description: The unique IDs associated with custom locality data. Multiple unique IDs can be passed separating with semicolon
+            allowEmptyValue: false
+            example: '9656_LOCALITY'
+          - name: height
+            in: query
+            schema:
+             type: integer
+            required: true
+            description: Height of the image in pixels
+            allowEmptyValue: false
+            example: 50
+          - name: width
+            in: query
+            schema:
+             type: integer
+            required: true
+            description: Width of the image in pixels
+            allowEmptyValue: false
+            example: 200
+          - name: fillColor
+            in: query
+            schema:
+             type: string
+            required: false
+            description: The semicolon separated color names to be filled in the respective polygons respectively. The values will be hex color codes.
+            allowEmptyValue: false
+            example: '#FFFFFF'
+          - name: opacity
+            in: query
+            schema:
+             type: integer
+            required: false
+            description: The semicolon separated opacity values on the scale of 1 to 10 for the respective polygons. 
+            allowEmptyValue: false
+            example: 5
+          - name: label
+            in: query
+            schema: 
+             type: string
+            required: false
+            description: The label value for the polygons. 
+            allowEmptyValue: false
+            example: 'Bahubali Enclave'
+          - name: labelColor
+            in: query
+            schema:
+             type: string
+            description: The color values of the label
+            allowEmptyValue: false
+            example: '#FFFFFF'
+          - name: labelSize
+            in: query
+            schema: 
+             type: integer
+            description: Size of label to be displayed
+            allowEmptyValue: false
+            example: 11
+          - name: labelPosition
+            in: query
+            schema: 
+             type: number  
+            description: the position of the label in pixels (x,y) cartesian coordinate
+            allowEmptyValue: false
+            example: 11
+        responses:
+          '200':
+            description: OK
+            content:
+              image/png:
+                schema:
+                  type: string
+                  format: binary
+                  example: Sample Image
+          '204':
+            description: Not found
+          '400':
+            description: Bad request
+          '401':
+            description: API access denied
+          '403':
+            description: Forbidden
+          '500':
+            description: Something went wrong
+          '503':
+            description: Internal server error
+        deprecated: false
+components:
+    securitySchemes:
+        BearerAuth: 
+          type: http
+          scheme: bearer
+          bearerFormat: 'bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6'
