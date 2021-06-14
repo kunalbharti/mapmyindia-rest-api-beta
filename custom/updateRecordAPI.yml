@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: Update a Record API
+  description: >-
+    This API will eventually help the Zoho systems to mark those leads as assigned or expired on the basis of their internal updates, so that those leads can be skipped by the Nearby Lead Finder API.
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+security: 
+  - BearerAuth: []
+paths:
+  /api/updaterecord/json:
+    get:
+      tags: 
+        - Update a Record API
+      description: >-
+        This API will eventually help the Zoho systems to mark those leads as assigned or expired on the basis of their internal updates, so that those leads can be skipped by the Nearby Lead Finder API.
+      summary: >-
+         Update a Record API
+      operationId: UpdateaRecordAPI
+      parameters:
+        # - name: Authorization
+        #   in: header
+        #   description: >-
+        #     Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+        #   required: true
+        #   allowEmptyValue: false
+        #   schema:
+        #     type: string
+        #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
+        - name: recordId
+          in: query
+          description: 'Find the Unique ID for a Lead/Contact/Account that zoho dashboard receives.'
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "ABC1234"
+        - name: isExpired
+          in: query
+          description: 'True or False to update if the lead should be marked as expired or not.'
+          required: true
+          allowEmptyValue: false
+          example: "true"
+          schema:
+            type: boolean
+        - name: updateRecordEloc
+          in: query
+          description: 'The new eloc of the particular record id if the address is updated.'
+          example: "MMI000"
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: updateModuleid
+          in: query
+          description: 'Update the unique Module ID where the unique record id lies.'
+          example: "XYZ234"
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: customNote
+          in: query
+          description: 'Add a note after updating the record.'
+          example: "Updated the ID"
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: object
+        '204':
+          description: Not found
+        '400':
+          description: Bad request
+        '401':
+          description: API access denied
+        '403':
+          description: Forbidden
+        '500':
+          description: Something went wrong
+        '503':
+          description: Internal server error
+      deprecated: false
+      servers:
+        - url: https://atlas.mapmyindia.com
+          description: 'Live Prod server for OAuth 2 based APIs'
+components:
+  securitySchemes:
+    BearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: 'bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6'

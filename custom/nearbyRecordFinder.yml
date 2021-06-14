@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Nearby Record Finder API
+  description: >-
+    The custom API will take a reference location and will display the Nearby leads for a field executive.
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+security: 
+  - BearerAuth: []
+paths:
+  /api/updaterecord/json:
+    get:
+      tags: 
+        - Nearby Record Finder API
+      description: >-
+        This API will eventually help the Zoho systems to mark those leads as assigned or expired on the basis of their internal updates, so that those leads can be skipped by the Nearby Lead Finder API.
+      summary: >-
+         Nearby Record Finder API
+      operationId: NearbyRecordFinderAPI
+      parameters:
+        # - name: Authorization
+        #   in: header
+        #   description: >-
+        #     Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+        #   required: true
+        #   allowEmptyValue: false
+        #   schema:
+        #     type: string
+        #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
+        - name: refLocation
+          in: query
+          description: 'A source point from where the nearby leads will be displayed. This can either be an eLoc or a geo-coordinate.'
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "MMI000"
+        - name: radius
+          in: query
+          description: 'The radius in meters for radial search. Default radius: 10000 metres.'
+          required: false
+          allowEmptyValue: false
+          example: "1000"
+          schema:
+            type: number
+        - name: moduleId
+          in: query
+          description: 'The ID of a module can be passed to get a certain type of records only, otherwise the nearby search will show all types of records from a reference location. Using this parameter, we can restrict the nearby API result to a particular module. Multiple module IDs can be passed separated by a semi-colon to filter results from Nearby API.'
+          example: "XYZ234"
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: copFilter
+          in: query
+          description: 'This field is used to filter to a particular administrative area. Autosuggest API will be used to determine the value of this input parameter (eLocs).'
+          example: ""
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: modifiedTime
+          in: query
+          description: '“Greater than equal to” filter parameter of modified time of Lead/Contact/Account in unix seconds.'
+          example: ""
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: number
+        - name: createdTime
+          in: query
+          description: '“Greater than equal to” filter parameter of created time of Lead/Contact/Account in unix seconds.'
+          example: ""
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: number
+        - name: page
+          in: query
+          description: 'The list of results comes in different pages and passed to get the number of pages.'
+          example: "20"
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: number
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: object
+        '204':
+          description: Not found
+        '400':
+          description: Bad request
+        '401':
+          description: API access denied
+        '403':
+          description: Forbidden
+        '500':
+          description: Something went wrong
+        '503':
+          description: Internal server error
+      deprecated: false
+      servers:
+        - url: https://atlas.mapmyindia.com
+          description: 'Live Prod server for OAuth 2 based APIs'
+components:
+  securitySchemes:
+    BearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: 'bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6'

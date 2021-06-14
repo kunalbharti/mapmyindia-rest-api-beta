@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: Add a Record API
+  description: >-
+    This is a custom requirement where we have to create the API for Zoho Leads that will be added in our Nearby Records Finder Data. <br><br> Zoho receives the leads and wants to show it with maps on their dashboard.
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+security: 
+  - BearerAuth: []
+paths:
+  /api/addrecord/json:
+    get:
+      tags: 
+        - Add a Record API
+      description: >-
+        The Add a Record API will add the leads to populate the database search.
+      summary: >-
+         Add a Record API
+      operationId: AddaRecordAPI
+      parameters:
+        # - name: Authorization
+        #   in: header
+        #   description: >-
+        #     Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+        #   required: true
+        #   allowEmptyValue: false
+        #   schema:
+        #     type: string
+        #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
+        - name: recordId
+          in: query
+          description: 'Unique ID for a Lead/Contact/Account that zoho dashboard receives.'
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "ABC1234"
+        - name: recordEloc
+          in: query
+          description: '6 digit unique digital address of the record.'
+          required: true
+          allowEmptyValue: false
+          example: "DR9VJ7"
+          schema:
+            type: string
+        - name: moduleId
+          in: query
+          description: 'Unique ID of the Module. This needs to be pre-arranged between Zoho and MapmyIndia to certain predetermined values. These values CANNOT be generated on the fly and need to be pre-fed into the system.'
+          example: "XYZ234"
+          required: false
+          allowEmptyValue: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: object
+        '204':
+          description: Not found
+        '400':
+          description: Bad request
+        '401':
+          description: API access denied
+        '403':
+          description: Forbidden
+        '500':
+          description: Something went wrong
+        '503':
+          description: Internal server error
+      deprecated: false
+      servers:
+        - url: https://atlas.mapmyindia.com
+          description: 'Live Prod server for OAuth 2 based APIs'
+components:
+  securitySchemes:
+    BearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: 'bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6'
