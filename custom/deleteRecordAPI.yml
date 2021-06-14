@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Delete a Record API
+  description: >-
+    There is a need for an API to remove entities from the NRF database on the basis of a unique ID of record. This will remove the entity using a record id when the record data is no longer needed in the Map server.
+  termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
+  version: 1.0.0
+  license:
+    name: MapmyIndia License Key Signup
+    url: https://www.mapmyindia.com/api/signup
+  contact:
+    name: MapmyIndia API Support
+    email: apisupport@mapmyindia.com
+    url: https://www.mapmyindia.com/api/
+security: 
+  - BearerAuth: []
+paths:
+  /api/deleterecord/json:
+    get:
+      tags: 
+        - Delete a Record API
+      description: >-
+        On suggestion of Zoho, the following API is introduced to delete the Lead/Contact/Account from the database.
+      summary: >-
+         Delete a Record API
+      operationId: DeleteaRecordAPI
+      parameters:
+        # - name: Authorization
+        #   in: header
+        #   description: >-
+        #     Authorization header with the value: “{token_type} {access_token}”. <br> Please generate your token from token generation API before calling this API.
+        #   required: true
+        #   allowEmptyValue: false
+        #   schema:
+        #     type: string
+        #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
+        - name: recordId
+          in: query
+          description: 'Unique ID for a Lead/Contact/Account that zoho dashboard receives.'
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          example: "ABC1234"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: object
+        '204':
+          description: Not found
+        '400':
+          description: Bad request
+        '401':
+          description: API access denied
+        '403':
+          description: Forbidden
+        '500':
+          description: Something went wrong
+        '503':
+          description: Internal server error
+      deprecated: false
+      servers:
+        - url: https://atlas.mapmyindia.com
+          description: 'Live Prod server for OAuth 2 based APIs'
+components:
+  securitySchemes:
+    BearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: 'bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6'
