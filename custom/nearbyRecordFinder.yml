@@ -2,7 +2,8 @@ openapi: 3.0.3
 info:
   title: Nearby Record Finder API
   description: >-
-    The custom API will take a reference location and will display the Nearby leads for a field executive.
+    Nearby Record Finder API, enables you to add discovery and search of nearby records by searching for a category of records (record type) within a defined radius and by adding additional filters to narrow the results further.
+    <br><br>This APIs follow OAuth2 based security. **To know more on how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php). <br><br> The API will have claims such as following to control access to certain response parameters such as: <ol><li> `outputFieldsList`: controls access to each response parameter. Would be configurable through Anchor UI to limit access to certain non essential response parameters as desired by the use case of the specific client. </li><li> `itemCount`: controls access to how many records the API will respond with per page. Would be configurable through Anchor UI. </li><li> `allowedRecordTypes`: contains which recordTypes can be accessed through the Nearby Record Finder API. Would be configurable through Anchor UI. </li>
   termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
   version: 1.0.0
   license:
@@ -14,13 +15,17 @@ info:
     url: https://www.mapmyindia.com/api/
 security: 
   - BearerAuth: []
+servers:
+  - url: https://app.mapmyindia.com
+    description: 'Prod server for Nearby Record Finder APIs'
 paths:
-  /api/updaterecord/json:
+  /v1/api/nearbyrecords/json:
     get:
       tags: 
         - Nearby Record Finder API
       description: >-
-        This API will eventually help the Zoho systems to mark those leads as assigned or expired on the basis of their internal updates, so that those leads can be skipped by the Nearby Lead Finder API.
+        This API will eventually help the client systems to find those records that are dynamically added / updated / deleted by the respective APIs to the Nearby Record Finder database. Once the records are populated, the Nearby Search Engine should be able to search and serve these records as per filter criteria.
+        <br><br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: "{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.
       summary: >-
          Nearby Record Finder API
       operationId: NearbyRecordFinderAPI
@@ -36,7 +41,8 @@ paths:
         #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: refLocation
           in: query
-          description: 'A source point from where the nearby leads will be displayed. This can either be an eLoc or a geo-coordinate.'
+          description: >-
+            Provides the location around which the search will be performed. e.g. `refLocation=28.454,77.435`. <br> The refLocation parameter can also accept <strong>eLoc</strong> as reference location. <br>Example: <code>refLocation=17ZUL7</code>
           required: true
           allowEmptyValue: false
           schema:
@@ -47,57 +53,71 @@ paths:
           description: 'The radius in meters for radial search. Default radius: 10000 metres.'
           required: false
           allowEmptyValue: false
-          example: "1000"
+          example: 1000
           schema:
             type: number
-        - name: moduleId
+        - name: recordType
           in: query
-          description: 'The ID of a module can be passed to get a certain type of records only, otherwise the nearby search will show all types of records from a reference location. Using this parameter, we can restrict the nearby API result to a particular module. Multiple module IDs can be passed separated by a semi-colon to filter results from Nearby API.'
-          example: "XYZ234"
+          description: 'The type of the record can be passed to get a certain type of records. Using this parameter, we can restrict the nearby API result to a particular record type. Multiple record types can be passed separated by a semi-colon to filter results from Nearby API.'
+          example: "XYZ234;ZXY234"
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: filter:cop
+          in: query
+          description: 'This field is used to filter to a particular administrative area. Autosuggest API can be used to determine the value of this input parameter (eLocs).'
+          example: "TAVI5S"
           required: false
           allowEmptyValue: false
           schema:
             type: string
-        - name: copFilter
+        - name: bounds
           in: query
-          description: 'This field is used to filter to a particular administrative area. Autosuggest API will be used to determine the value of this input parameter (eLocs).'
-          example: ""
-          required: false
+          description: >-
+            '(x1,y1;x2,y2) Allows the developer to send in map bounds to provide a nearby search of the geobounds. where x1,y1 are the lat lng of the bound. The bounds are set from topLeft to bottomRight (North-West to South-East).'
           allowEmptyValue: false
+          example: "28.639256,77.211133;28.625214,77.237483"
           schema:
             type: string
         - name: modifiedTime
           in: query
-          description: '“Greater than equal to” filter parameter of modified time of Lead/Contact/Account in unix seconds.'
-          example: ""
+          description: '“Greater than equal to” filter parameter of modified time of record in unix seconds.'
+          example: 1624013846
           required: false
           allowEmptyValue: false
           schema:
             type: number
+        - name: sortBy
+          in: query
+          description: 'Provides configured sorting operations for the client on cloud. Below are the available sorts:<br><ul><li>`dist:asc & dist:desc` - will sort data in order of distance from the passed location (default is `dist:asc`).'
+          allowEmptyValue: false
+          example: "dist:asc"
+          schema:
+            type: string
         - name: createdTime
           in: query
-          description: '“Greater than equal to” filter parameter of created time of Lead/Contact/Account in unix seconds.'
-          example: ""
+          description: '“Greater than equal to” filter parameter of created time of record in unix seconds.'
+          example: 1624003846
           required: false
           allowEmptyValue: false
           schema:
             type: number
         - name: page
           in: query
-          description: 'The list of results comes in different pages and passed to get the number of pages.'
-          example: "20"
+          description: 'The list of results comes in different pages and `page` can be passed to get the results from that page.'
+          example: 2
           required: false
           allowEmptyValue: false
           schema:
             type: number
-
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema: 
-                type: object
+                $ref: '#/components/schemas/nearbyResults'
         '204':
           description: Not found
         '400':
@@ -115,6 +135,122 @@ paths:
         - url: https://atlas.mapmyindia.com
           description: 'Live Prod server for OAuth 2 based APIs'
 components:
+  schemas: 
+    nearbyResults:
+      title: Nearby Results
+      description: The result object which contains the Nearby Record Finder API results.
+      type: object
+      required:
+        - suggestedLocations
+        - pageInfo
+      properties:
+        suggestedLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/NB1'
+        pageInfo:
+          $ref: '#/components/schemas/NB2'
+    NB1: 
+      title: Suggested Locations
+      required:
+        - recordId
+        - distance
+        - recordEloc
+        - latitude
+        - longitude
+        - orderIndex
+        - recordType
+        - modifiedOn
+        - createdOn
+        - isExpired
+        - customNote
+      type: object
+      properties: 
+        recordID: 
+          type: string
+          description: 'Unique ID for a record.'
+          format: string
+          example: 'DEF1234'
+        recordEloc: 
+          type: string
+          description: 'True or False to update if the record should be marked as expired or not.'
+          format: string
+          example: '3F45CB'
+        recordType: 
+          type: string
+          description: 'To Update the record type to which the unique record id belongs. This is reclassification to a different type of record.'
+          format: string
+          example: 'ZXY234'
+        distance: 
+          type: number
+          description: 'The distance in meters of the record from the reference location.'
+          format: integer
+          example: 177
+        orderIndex: 
+          type: number
+          description: 'the order where this result should be placed.'
+          format: integer
+          example: 1
+        latitude: 
+          type: number
+          description: >-
+            'The latitude of the record's location.'
+          format: integer
+          example: 28.264545
+        longitude: 
+          type: number
+          description: >-
+            'The longitude of the record's location'
+          format: integer
+          example: 77.126434
+        customNote: 
+          type: string
+          description: 'A custom note to add misc. information to the record.'
+          format: string
+          example: 'Updated the ID'
+        createdOn: 
+          type: number
+          description: 'The timestamp on which the record was created'
+          format: integer
+          example: 1624003846
+        modifiedOn: 
+          type: number
+          description: 'The timestampt on which the record was last updated'
+          format: integer
+          example: 1624013846
+        isExpired: 
+          type: boolean
+          description: 'The timestampt on which the record was last updated'
+          format: boolean
+          example: false
+    NB2:
+      title: Page Info
+      required:
+        - pageCount
+        - totalHits
+        - totalPages
+        - pageSize
+      properties:
+        pageCount:
+          type: integer
+          format: integer
+          example: 1
+          description: 'The number of pages with results.'
+        totalHits:
+          type: integer
+          format: integer
+          example: 2730
+          description: 'Total number of places in the results.'
+        totalPages:
+          type: integer
+          format: integer
+          example: 6
+          description: 'Total number of pages as per page size and no of results.'
+        pageSize:
+          type: integer
+          format: integer
+          example: 500
+          description: 'The number of results per page.'
   securitySchemes:
     BearerAuth: 
       type: http

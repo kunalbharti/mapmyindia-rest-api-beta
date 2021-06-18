@@ -2,25 +2,30 @@ openapi: 3.0.3
 info:
   title: Update a Record API
   description: >-
-    This API will eventually help the Zoho systems to mark those leads as assigned or expired on the basis of their internal updates, so that those leads can be skipped by the Nearby Lead Finder API.
+    This API is used to modify the records already added to the Nearby Record finder database by the client. e.g. The records can be marked expired or their associated location (eLoc) can be changed OR their type can be reclassified. 
+    <br><br>This APIs follow OAuth2 based security. **To know more on how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php).
   termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
   version: 1.0.0
   license:
     name: MapmyIndia License Key Signup
-    url: https://www.mapmyindia.com/api/signup
+    url: https://www.mapmyindia.com/api/
   contact:
     name: MapmyIndia API Support
     email: apisupport@mapmyindia.com
     url: https://www.mapmyindia.com/api/
 security: 
   - BearerAuth: []
+servers:
+  - url: https://app.mapmyindia.com
+    description: 'Prod server for Nearby Record Finder APIs'
 paths:
-  /api/updaterecord/json:
-    get:
+  /v1/api/updaterecord/json:
+    put:
       tags: 
         - Update a Record API
       description: >-
-        This API will eventually help the Zoho systems to mark those leads as assigned or expired on the basis of their internal updates, so that those leads can be skipped by the Nearby Lead Finder API.
+        This API is used to modify the records already added to the Nearby Record finder database by the client. e.g. The records can be marked expired or their associated location (eLoc) can be changed OR their type can be reclassified.
+        <br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: "{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.
       summary: >-
          Update a Record API
       operationId: UpdateaRecordAPI
@@ -36,7 +41,7 @@ paths:
         #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: recordId
           in: query
-          description: 'Find the Unique ID for a Lead/Contact/Account that zoho dashboard receives.'
+          description: 'Unique ID for a record.'
           required: true
           allowEmptyValue: false
           schema:
@@ -44,7 +49,7 @@ paths:
           example: "ABC1234"
         - name: isExpired
           in: query
-          description: 'True or False to update if the lead should be marked as expired or not.'
+          description: 'True or False to update if the record should be marked as expired or not.'
           required: true
           allowEmptyValue: false
           example: "true"
@@ -52,15 +57,15 @@ paths:
             type: boolean
         - name: updateRecordEloc
           in: query
-          description: 'The new eloc of the particular record id if the address is updated.'
+          description: 'The new eloc of the particular record id if the location is to be updated.'
           example: "MMI000"
           required: true
           allowEmptyValue: false
           schema:
             type: string
-        - name: updateModuleid
+        - name: updateRecordType
           in: query
-          description: 'Update the unique Module ID where the unique record id lies.'
+          description: 'To Update the record type to which the unique record id belongs. This is reclassification to a different type of record.'
           example: "XYZ234"
           required: true
           allowEmptyValue: false
@@ -70,8 +75,17 @@ paths:
           in: query
           description: 'Add a note after updating the record.'
           example: "Updated the ID"
-          required: true
+          required: false
           allowEmptyValue: false
+          schema:
+            type: string
+        - name: updateRecordCoordinates
+          in: query
+          description: >-
+            The coordinates of the record. This request parameter is <strong>mutually exclusive</strong> to `updateRecordEloc` input parameter and becomes mandatory if `updateRecordEloc` is not provided in the request. <br><br>The coordinates are comma separated latitude,longitude values. 
+          required: false
+          allowEmptyValue: false
+          example: "28.7985267,77.162543"
           schema:
             type: string
       responses:
@@ -80,7 +94,7 @@ paths:
           content:
             application/json:
               schema: 
-                type: object
+                $ref: '#/components/schemas/updateRecordResult'
         '204':
           description: Not found
         '400':
@@ -95,9 +109,59 @@ paths:
           description: Internal server error
       deprecated: false
       servers:
-        - url: https://atlas.mapmyindia.com
-          description: 'Live Prod server for OAuth 2 based APIs'
+        - url: https://app.mapmyindia.com
+          description: 'Prod server for Nearby Record Finder APIs'
 components:
+  schemas: 
+    updateRecordResult: 
+      title: 'updateRecordResult'
+      description: >- 
+        The result structure of update Record API response.
+      type: object
+      required: 
+        - recordId
+        - updateRecordEloc
+        - updateRecordType
+        - customNote
+        - createdOn
+        - modifiedOn
+        - isExpired
+      properties: 
+        recordID: 
+          type: string
+          description: 'Unique ID for a record.'
+          format: string
+          example: 'DEF1234'
+        updateRecordEloc: 
+          type: string
+          description: 'True or False to update if the record should be marked as expired or not.'
+          format: string
+          example: '3F45CB'
+        updateRecordType: 
+          type: string
+          description: 'To Update the record type to which the unique record id belongs. This is reclassification to a different type of record.'
+          format: string
+          example: 'ZXY234'
+        customNote: 
+          type: string
+          description: 'A custom note to add misc. information to the record.'
+          format: string
+          example: 'Updated the ID'
+        createdOn: 
+          type: number
+          description: 'The timestamp on which the record was created'
+          format: integer
+          example: 1624003846
+        modifiedOn: 
+          type: number
+          description: 'The timestampt on which the record was last updated'
+          format: integer
+          example: 1624013846
+        isExpired: 
+          type: boolean
+          description: 'The timestampt on which the record was last updated'
+          format: boolean
+          example: false
   securitySchemes:
     BearerAuth: 
       type: http

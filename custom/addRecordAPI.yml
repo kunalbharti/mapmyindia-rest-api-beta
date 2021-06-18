@@ -2,25 +2,30 @@ openapi: 3.0.3
 info:
   title: Add a Record API
   description: >-
-    This is a custom requirement where we have to create the API for Zoho Leads that will be added in our Nearby Records Finder Data. <br><br> Zoho receives the leads and wants to show it with maps on their dashboard.
+    This API allows one to dynamically add record to the Nearby Record finder database. These records are used to perform Nearby Searches on the different types of user records that are stored within Nearby Record finder database.
+    <br><br>This APIs follow OAuth2 based security. **To know more on how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php).
   termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
   version: 1.0.0
   license:
     name: MapmyIndia License Key Signup
-    url: https://www.mapmyindia.com/api/signup
+    url: https://www.mapmyindia.com/api/
   contact:
     name: MapmyIndia API Support
     email: apisupport@mapmyindia.com
     url: https://www.mapmyindia.com/api/
 security: 
   - BearerAuth: []
+servers:
+  - url: https://app.mapmyindia.com
+    description: 'Prod server for Nearby Record Finder APIs'
 paths:
-  /api/addrecord/json:
-    get:
+  /v1/api/addrecord/json:
+    post:
       tags: 
         - Add a Record API
       description: >-
-        The Add a Record API will add the leads to populate the database search.
+        This API allows one to dynamically add record to the Nearby Record finder database. These records are used to perform Nearby Searches on the different types of user records that are stored within Nearby Record finder database.
+        <br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: "{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.
       summary: >-
          Add a Record API
       operationId: AddaRecordAPI
@@ -36,7 +41,7 @@ paths:
         #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: recordId
           in: query
-          description: 'Unique ID for a Lead/Contact/Account that zoho dashboard receives.'
+          description: 'Unique ID for a record.'
           required: true
           allowEmptyValue: false
           schema:
@@ -44,27 +49,41 @@ paths:
           example: "ABC1234"
         - name: recordEloc
           in: query
-          description: '6 digit unique digital address of the record.'
+          description: >-
+            '6 digit unique digital address of the record.'
           required: true
           allowEmptyValue: false
           example: "DR9VJ7"
           schema:
             type: string
-        - name: moduleId
+        - name: recordType
           in: query
-          description: 'Unique ID of the Module. This needs to be pre-arranged between Zoho and MapmyIndia to certain predetermined values. These values CANNOT be generated on the fly and need to be pre-fed into the system.'
-          example: "XYZ234"
+          description: 'Unique ID of the Module. This needs to be pre-arranged between Client and MapmyIndia to certain predetermined values. These values CANNOT be generated on the fly and need to be pre-fed into the system.'
+          example: "moduleID"
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: string
+        - name: customNote
+          in: query
+          description: 'Add a note after updating the record.'
+          example: "Updated the ID"
           required: false
           allowEmptyValue: false
           schema:
             type: string
+        - name: recordCoordinates
+          in: query
+          description: >-
+            The coordinates of the record. This request parameter is <strong>mutually exclusive</strong> to `recordEloc` input parameter and becomes mandatory if `recordEloc` is not provided in the request. <br><br>The coordinates are comma separated latitude,longitude values. 
+          required: false
+          allowEmptyValue: false
+          example: "28.7985267,77.162543"
+          schema:
+            type: string
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema: 
-                type: object
+        '201':
+          description: Created
         '204':
           description: Not found
         '400':
@@ -78,9 +97,6 @@ paths:
         '503':
           description: Internal server error
       deprecated: false
-      servers:
-        - url: https://atlas.mapmyindia.com
-          description: 'Live Prod server for OAuth 2 based APIs'
 components:
   securitySchemes:
     BearerAuth: 

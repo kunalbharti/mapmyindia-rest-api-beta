@@ -2,7 +2,8 @@ openapi: 3.0.3
 info:
   title: Delete a Record API
   description: >-
-    There is a need for an API to remove entities from the NRF database on the basis of a unique ID of record. This will remove the entity using a record id when the record data is no longer needed in the Map server.
+    There is a need for an API to remove entities from the NRF database on the basis of a unique ID of record. This will remove the entity using a record id when the record data is no longer needed in the Nearby Record finder database server.
+    <br><br>This APIs follow OAuth2 based security. **To know more on how to create your authorization tokens, please use our authorization token URL. More details available**  [here](https://www.mapmyindia.com/api/advanced-maps/doc/authentication-api.php).
   termsOfService: 'https://www.mapmyindia.com/api/terms-&-conditions'
   version: 1.0.0
   license:
@@ -14,13 +15,17 @@ info:
     url: https://www.mapmyindia.com/api/
 security: 
   - BearerAuth: []
+servers:
+  - url: https://app.mapmyindia.com
+    description: 'Prod server for Nearby Record Finder APIs'
 paths:
-  /api/deleterecord/json:
-    get:
+  /v1/api/deleterecord/json:
+    delete:
       tags: 
         - Delete a Record API
       description: >-
-        On suggestion of Zoho, the following API is introduced to delete the Lead/Contact/Account from the database.
+        There is a need for an API to remove entities from the NRF database on the basis of a unique ID of record. This will remove the entity using a record id when the record data is no longer needed in the Nearby Record finder database server.
+        <br>The API leverages OAuth 2.0 based security. Hence, the developer would need to send a request for access token using their client_id and client_secret to the OAuth API. Once validated from the OAuth API, the access_token and the token_type need to be sent as Authorization header with the value: "{`token_type`} {`access_token`}”. <br><strong>Authorization</strong>: `token_type` `access_token`.
       summary: >-
          Delete a Record API
       operationId: DeleteaRecordAPI
@@ -36,7 +41,7 @@ paths:
         #   example: "bearer 0XXXXXXf-dXX0-4XX0-8XXa-eXXXXXXXXXX6"
         - name: recordId
           in: query
-          description: 'Unique ID for a Lead/Contact/Account that zoho dashboard receives.'
+          description: 'Unique ID for a Lead/Contact/Account that Client dashboard receives.'
           required: true
           allowEmptyValue: false
           schema:
@@ -45,10 +50,6 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema: 
-                type: object
         '204':
           description: Not found
         '400':
